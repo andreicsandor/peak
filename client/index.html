@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/styles.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" type="text/css" href="./toastr.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <title>Peak</title>
+  </head>
+  <body>
+    <header class="nav">
+      <nav
+        class="container mx-auto px-4 py-2 flex items-center justify-between"
+      >
+        <div>
+          <a
+            href="/"
+            aria-label="Go to home page"
+            class="text-white font-bold text-2xl"
+          >
+            <img
+              class="logo"
+              src="./src/assets/mountain-sun-solid.svg"
+              alt="app logo"
+            />
+          </a>
+        </div>
+        <div class="md:block">
+          <ul class="flex space-x-8" id="nav-links"></ul>
+        </div>
+        <div>
+          <a href="/logout" aria-label="Log out" class="text-white font-bold">
+            <img class="logo" src="./src/assets/x.svg" alt="app logo" />
+          </a>
+        </div>
+      </nav>
+    </header>
+    <main class="main-content-component"></main>
+    <script type="module" src="./main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
+  </body>
+</html>
