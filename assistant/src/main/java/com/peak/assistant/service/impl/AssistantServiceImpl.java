@@ -60,12 +60,15 @@ public class AssistantServiceImpl implements AssistantService {
         }
 
         prompt.append("Based on the above data, provide an app-suitable recommendation (circa 5 phrases) for the planned running route. ")
-                .append("Include specific tips on hydration, food intake, types of running shoes based on short/long distance and timing of eating before the run. ")
+                .append("Include specific tips on hydration, food intake, types of running shoes based on short (< 10km)/long distance (> 10km). ")
+                .append("Give food recommendations based on required level of energy for the effort (e.g. more carbs for increased fatigue). ")
+                .append("Avoid nutrition and hydration tips if route is under 5km. ")
                 .append("If weather data is available, describe how the conditions might feel, including the impact of humidity or wind, and explain why these factors are important for preparation. ")
-                .append("If weather data is not available, mention that weather factors could also influence preparation. ")
-                .append("Tailor recommendations based on the route data and avoid general tips. Avoid mentioning route specific metrics like duration and distance, but focus on pace and weather data. ")
+                .append("If weather data is not available, avoid weather related tips. ")
+                .append("Tailor recommendations based on the route data and avoid general tips. ")
+                .append("Avoid mentioning route duration and distance in your response. ")
+                .append("Use one decimal for any number that is not round. ")
                 .append("Consider the target pace, computed as duration over distance, and the overall run intensity, taking into account duration, pace, elevation gain, and weather factors. ")
-                .append("Be mindful of short distances and low elevation gains. Fatigue factors may be less significant due to the short distance and small elevation gain, but still consider pace and weather conditions.")
                 .append("Keep in mind that distance and elevation gain are measured in meters, while duration is in seconds. ")
                 .append("Additionally, provide a fatigue factor recommendation based on the route data, run intensity, and weather conditions.")
                 .append("Keep the recommendation within a couple of lines. ");
@@ -77,10 +80,10 @@ public class AssistantServiceImpl implements AssistantService {
         String apiUrl = "https://api.openai.com/v1/chat/completions";
 
         JSONObject requestBody = new JSONObject();
-        requestBody.put("model", "gpt-3.5-turbo");
-        requestBody.put("messages", new JSONArray().put(new JSONObject().put("role", "system").put("content", "You are a helpful assistant."))
+        requestBody.put("model", "gpt-4");
+        requestBody.put("messages", new JSONArray().put(new JSONObject().put("role", "system").put("content", "You are a helpful assistant, a dietitian & running coach."))
                 .put(new JSONObject().put("role", "user").put("content", prompt)));
-        requestBody.put("max_tokens", 150);
+        requestBody.put("max_tokens", 200);
         requestBody.put("temperature", 0.7);
 
         HttpHeaders headers = new HttpHeaders();
