@@ -5,7 +5,7 @@ export const toastrOptions = {
   progressBar: true,
   positionClass: "toast-top-right",
   preventDuplicates: true,
-  showDuration: "300",
+  showDuration: "500",
   hideDuration: "1000",
   timeOut: "5000",
   extendedTimeOut: "1000",
