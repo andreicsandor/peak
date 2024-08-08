@@ -20,3 +20,6 @@ users/mvnw.cmd
 users/.mvn/wrapper/maven-wrapper.properties
 routes/mvnw.cmd
 routes/.mvn/wrapper/maven-wrapper.properties
+authentication/src/main/resources/authapp.p12
+client/cert/server-cert.pem
+client/cert/server-key.pem
