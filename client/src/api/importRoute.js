@@ -1,4 +1,4 @@
-import { API_MAPS_URL } from "../config";
+import { API_MAPS_URL } from "../config/apiConfig";
 import { ImportRoute } from "../dto/importRouteDTO";
 import { getAuthHeader } from "../utils/authUtils";
 

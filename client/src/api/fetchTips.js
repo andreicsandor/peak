@@ -1,4 +1,4 @@
-import { API_ASSISTANT_URL } from "../config";
+import { API_ASSISTANT_URL } from "../config/apiConfig";
 import { getAuthHeader } from "../utils/authUtils";
 
 export async function fetchTips(routeData) {

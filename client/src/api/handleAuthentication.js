@@ -1,4 +1,4 @@
-import { API_AUTH_URL } from "../config";
+import { API_AUTH_URL } from "../config/apiConfig";
 
 export function handleLogin(event) {
   event.preventDefault();

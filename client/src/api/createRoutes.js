@@ -3,7 +3,7 @@ import { ImportRoute } from "../dto/importRouteDTO";
 import { RouteMetrics } from "../dto/routeMetricsDTO";
 import { WeatherMetrics } from "../dto/weatherMetricsDTO";
 import { getAuthHeader } from "../utils/authUtils";
-import { API_ROUTES_URL } from "../config";
+import { API_ROUTES_URL } from "../config/apiConfig";
 
 export async function saveRoute(
   waypoints,
