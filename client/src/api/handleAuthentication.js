@@ -1,4 +1,4 @@
-import { API_AUTH_URL } from "../config/apiConfig";
+import { API_LOGIN_URL } from "../config/apiConfig";
 
 export function handleLogin(event) {
   event.preventDefault();
@@ -7,7 +7,7 @@ export function handleLogin(event) {
 
   const loginData = { username, password };
 
-  fetch(`${API_AUTH_URL}/login`, {
+  fetch(`${API_LOGIN_URL}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -17,6 +17,7 @@ export function handleLogin(event) {
   })
   .then(response => {
     if (!response.ok) {
+      console.log(response);
       throw new Error('Login failed');
     }
     return response.json();

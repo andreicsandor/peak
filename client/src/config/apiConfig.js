@@ -1,6 +1,6 @@
-export const API_AUTH_URL = 'http://localhost:8079';
-export const API_USERS_URL = 'http://localhost:8079/auth/users';
-export const API_ROUTES_URL = 'http://localhost:8079/auth/routes';
-export const API_MAPS_URL = 'http://localhost:8079/auth/maps';
-export const API_WEATHER_URL = 'http://localhost:8083';
-export const API_ASSISTANT_URL = 'http://localhost:8079/auth/assistant';
+export const API_LOGIN_URL = '/login';
+export const API_USERS_URL = '/auth/users';
+export const API_ROUTES_URL = '/auth/routes';
+export const API_MAPS_URL = '/auth/maps';
+export const API_WEATHER_URL = '/weather';
+export const API_ASSISTANT_URL = '/auth/assistant';
