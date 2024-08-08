@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RequestMapping("/auth/users")
 @RestController
 public class PersonAuthController {
