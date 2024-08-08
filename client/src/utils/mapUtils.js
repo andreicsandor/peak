@@ -114,11 +114,14 @@ export async function addFetchedRoute(route) {
   if (route && route.waypoints) {
     const waypoints = parseWKTPoints(route.waypoints);
 
-    for (const { lng, lat } of waypoints) {
+    const markers = waypoints.map(({ lng, lat }) => {
       const waypointToAdd = markerManager.createMarker({ lng, lat });
-      await routeManager.insertWaypoint(waypointToAdd);
       markerManager.placeMarker(waypointToAdd);
-    }
+      return waypointToAdd;
+    });
+
+    await routeManager.insertWaypoints(markers);
+
     setFetchedCoordinates(parseWKTPoints(route.geoCoordinates));
     eventBus.publish("refreshRoute");
   } else {

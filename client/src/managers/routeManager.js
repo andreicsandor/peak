@@ -46,6 +46,11 @@ export class RouteManager {
     await this.computeRoute();
   }
 
+  async insertWaypoints(waypoints) {
+    this.waypoints.push(...waypoints);
+    await this.computeRoute();
+  }
+
   async insertWaypointAfter(waypointToInsert, referenceWaypoint) {
     const index = this.getIndexOfWaypoint(referenceWaypoint);
     if (index !== -1) {
