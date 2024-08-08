@@ -106,21 +106,29 @@ export function displayHeatMap(map, differencesGeoJSON, maxDifference) {
       data: differencesGeoJSON,
     });
 
+    const stops = [
+      [0, 0],
+      [0.5, 1],
+      [maxDifference, 3],
+    ];
+
+    // Ensure stops are in ascending order
+    if (maxDifference < 0.5) {
+      stops[1] = [maxDifference / 2, 1];
+      stops[2] = [maxDifference, 3];
+    }
+
     map.addLayer({
       id: "heatmap-layer",
       type: "heatmap",
       source: "heatmap-data",
       minzoom: 14,
-      maxzoom: 17.5,
+      maxzoom: 16,
       paint: {
         "heatmap-weight": {
           property: "intensity",
           type: "exponential",
-          stops: [
-            [0, 0],
-            [maxDifference / 2, 1],
-            [maxDifference, 3],
-          ],
+          stops: stops,
         },
         "heatmap-color": [
           "interpolate",
@@ -128,13 +136,13 @@ export function displayHeatMap(map, differencesGeoJSON, maxDifference) {
           ["heatmap-density"],
           0,
           "rgba(255, 240, 240, 0)",
-          0.2,
+          0.1,
           "rgb(254, 224, 210)",
-          0.4,
+          0.3,
           "rgb(252, 187, 161)",
-          0.6,
+          0.5,
           "rgb(252, 146, 114)",
-          0.8,
+          0.7,
           "rgb(251, 106, 74)",
           1,
           "rgb(203, 24, 29)",
@@ -159,8 +167,8 @@ export function displayHeatMap(map, differencesGeoJSON, maxDifference) {
 // Generate and display the heatmap data for the imported route and fetched route
 export function generateAndDisplayHeatMap(map) {
   const { features, maxDifference } = generateHeatMapData(
-    fetchedCoordinates,
-    importedCoordinates
+    importedCoordinates,
+    fetchedCoordinates
   );
   displayHeatMap(map, { type: "FeatureCollection", features }, maxDifference);
 }
