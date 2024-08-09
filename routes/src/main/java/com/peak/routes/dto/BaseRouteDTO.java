@@ -8,16 +8,18 @@ public abstract class BaseRouteDTO {
     private String waypoints;
     private String geoCoordinates;
     private LocalDateTime createdTime;
+    private Long personId;
 
     public BaseRouteDTO() {
     }
 
-    public BaseRouteDTO(Long id, String name, String waypoints, String geoCoordinates, LocalDateTime createdTime) {
+    public BaseRouteDTO(Long id, String name, String waypoints, String geoCoordinates, LocalDateTime createdTime, Long personId) {
         this.id = id;
         this.name = name;
         this.waypoints = waypoints;
         this.geoCoordinates = geoCoordinates;
         this.createdTime = createdTime;
+        this.personId = personId;
     }
 
     public Long getId() {
@@ -58,5 +60,13 @@ public abstract class BaseRouteDTO {
 
     public void setCreatedTime(LocalDateTime createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public Long getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
 }

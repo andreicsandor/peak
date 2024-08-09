@@ -43,13 +43,13 @@ public class ImportRouteController {
     }
 
     @PostMapping("/import-route")
-    public ResponseEntity<?> importRoute(@RequestParam("gpxFile") MultipartFile file, @RequestParam("routeId") Long routeId) {
+    public ResponseEntity<?> importRoute(@RequestParam("gpxFile") MultipartFile file, @RequestParam("routeId") Long routeId, @RequestParam("personId") Long personId) {
         if (file.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "No file uploaded"));
         }
 
         try {
-            List<ImportRouteDTO> parsedImportRoutes = importRouteService.processImportRoute(file, routeId);
+            List<ImportRouteDTO> parsedImportRoutes = importRouteService.processImportRoute(file, routeId, personId);
             return ResponseEntity.ok().body(Map.of("message", "File processed successfully", "routes", parsedImportRoutes));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Error processing file", "error", e.getMessage()));
@@ -79,6 +79,21 @@ public class ImportRouteController {
         } else {
             Map<String, String> response = new HashMap<>();
             response.put("message", "Failed to delete import route.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @DeleteMapping("/delete-routes/person/{routeId}")
+    public ResponseEntity<?> deleteImportRoutesByPersonId(@PathVariable Long routeId) {
+        Boolean result = importRouteService.deleteImportRoutesByPersonId(routeId);
+
+        if (result) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Import routes deleted successfully.");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } else {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Failed to delete import routes.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }

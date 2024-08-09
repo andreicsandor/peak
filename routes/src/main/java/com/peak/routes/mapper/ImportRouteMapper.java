@@ -29,6 +29,7 @@ public class ImportRouteMapper {
             importRouteDTO.setGeoCoordinates(wktWriter.write(importRoute.getGeoCoordinates()));
         }
         importRouteDTO.setCreatedTime(importRoute.getCreatedTime());
+        importRouteDTO.setPersonId(importRoute.getPersonId());
         importRouteDTO.setRouteId(importRoute.getRouteId());
         return importRouteDTO;
     }
@@ -64,6 +65,7 @@ public class ImportRouteMapper {
             }
         }
         importRoute.setCreatedTime(importRouteDTO.getCreatedTime());
+        importRoute.setPersonId(importRouteDTO.getPersonId());
         importRoute.setRouteId(importRouteDTO.getRouteId());
         return importRoute;
     }

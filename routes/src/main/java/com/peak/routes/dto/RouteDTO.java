@@ -17,8 +17,8 @@ public class RouteDTO extends BaseRouteDTO {
     public RouteDTO() {
     }
 
-    public RouteDTO(Long id, String name, String waypoints, String geoCoordinates, double distance, double duration, double elevationGain, String location, LocalDateTime createdTime, WeatherMetrics weatherMetrics, Long importedRouteId, Double percentageSimilarity, LocalDateTime completedTime) {
-        super(id, name, waypoints, geoCoordinates, createdTime);
+    public RouteDTO(Long id, String name, String waypoints, String geoCoordinates, double distance, double duration, double elevationGain, String location, LocalDateTime createdTime, Long personId, WeatherMetrics weatherMetrics, Long importedRouteId, Double percentageSimilarity, LocalDateTime completedTime) {
+        super(id, name, waypoints, geoCoordinates, createdTime, personId);
         this.distance = distance;
         this.duration = duration;
         this.elevationGain = elevationGain;

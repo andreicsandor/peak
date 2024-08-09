@@ -28,13 +28,16 @@ public class RouteController {
 
     @GetMapping("/routes")
     public List<RouteDTO> getRoutes(@RequestParam(value = "id", required = false) Long id,
-                                    @RequestParam(value = "name", required = false) String name) {
+                                    @RequestParam(value = "name", required = false) String name,
+                                    @RequestParam(value = "personId", required = false) Long personId) {
         List<RouteDTO> routes;
 
         if (id != null) {
             routes = routeService.findRouteById(id);
         } else if (name != null) {
             routes = routeService.findRouteByName(name);
+        } else if (personId != null) {
+            routes = routeService.findRoutesByPersonId(personId);
         } else {
             routes = routeService.findRoutes();
         }
@@ -85,5 +88,33 @@ public class RouteController {
             response.put("message", "Failed to delete route.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
+    }
+
+    @DeleteMapping("/delete-routes/person/{personId}")
+    public ResponseEntity<?> deleteRoutesByPersonId(@PathVariable Long personId) {
+        Boolean result = routeService.deleteRoutesByPersonId(personId);
+
+        if (result) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Routes deleted successfully.");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } else {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Failed to delete routes.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @PostMapping("/checkOwnership")
+    public ResponseEntity<Map<String, Boolean>> checkOwnership(@RequestBody Map<String, Long> request) {
+        Long routeId = request.get("routeId");
+        Long personId = request.get("personId");
+
+        boolean isOwnedByUser = routeService.isRouteOwnedByPerson(routeId, personId);
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isOwnedByUser", isOwnedByUser);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

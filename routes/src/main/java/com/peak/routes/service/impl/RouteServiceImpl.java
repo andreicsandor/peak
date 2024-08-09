@@ -6,12 +6,14 @@ import com.peak.routes.dto.RoutePatchDTO;
 import com.peak.routes.mapper.RouteMapper;
 import com.peak.routes.model.Route;
 import com.peak.routes.repository.RouteDAO;
+import com.peak.routes.service.ImportRouteService;
 import com.peak.routes.service.RouteService;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.io.WKTReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,6 +26,9 @@ public class RouteServiceImpl implements RouteService {
 
     @Autowired
     private RouteDAO routeDAO;
+
+    @Autowired
+    private ImportRouteService importRouteService;
 
     @Autowired
     private RouteMapper routeMapper;
@@ -57,6 +62,7 @@ public class RouteServiceImpl implements RouteService {
         route.setWeatherMetrics(newRouteDTO.getWeatherMetrics());
         route.setLocation(newRouteDTO.getLocation());
         route.setCreatedTime(LocalDateTime.now());
+        route.setPersonId(newRouteDTO.getPersonId());
         route.setImportedRouteId(newRouteDTO.getImportedRouteId());
         route.setPercentageSimilarity(newRouteDTO.getPercentageSimilarity());
 
@@ -111,10 +117,6 @@ public class RouteServiceImpl implements RouteService {
         route.setImportedRouteId(routePatchDTO.getImportedRouteId());
         route.setPercentageSimilarity(routePatchDTO.getPercentageSimilarity());
 
-        System.out.println(route.getWeatherMetrics());
-        System.out.println(route.getPercentageSimilarity());
-        System.out.println(route.getImportedRouteId());
-
         if (route.getWeatherMetrics().getScheduledTime()== null
                 && route.getPercentageSimilarity() != null
                 && route.getImportedRouteId() != null) {
@@ -132,6 +134,20 @@ public class RouteServiceImpl implements RouteService {
             return false;
         }
         routeDAO.deleteById(id);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public Boolean deleteRoutesByPersonId(Long personId) {
+        List<Route> routes = routeDAO.findByPersonId(personId);
+
+        if (routes.isEmpty()) {
+            return true;
+        }
+
+        routeDAO.deleteAll(routes);
+
         return true;
     }
 
@@ -160,5 +176,23 @@ public class RouteServiceImpl implements RouteService {
     public List<RouteDTO> findRouteByName(String name) {
         List<Route> routes = routeDAO.findByName(name);
         return routeMapper.toRouteDTOs(routes);
+    }
+
+    @Override
+    public List<RouteDTO> findRoutesByPersonId(Long personId) {
+        List<Route> routes = routeDAO.findByPersonId(personId);
+        return routeMapper.toRouteDTOs(routes);
+    }
+
+    @Override
+    public Boolean isRouteOwnedByPerson(Long routeId, Long personId) {
+        Optional<Route> routeEntity = routeDAO.findById(routeId);
+
+        if (routeEntity.isPresent()) {
+            Route route = routeEntity.get();
+            return route.getPersonId().equals(personId);
+        }
+
+        return false;
     }
 }

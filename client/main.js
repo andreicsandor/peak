@@ -18,8 +18,9 @@ import { resetRoutePanel } from "./src/components/createRoutePanel.js";
 import { addLocationSearchBar } from "./src/components/createSearchControls.js";
 import { addLocationButton } from "./src/components/createSearchControls.js";
 import { addWeatherWidget } from "./src/components/createWeatherControls.js";
-import { getCookie } from "./src/utils/authUtils.js";
+import { getCookie, getPersonIdFromCookie } from "./src/utils/authUtils.js";
 import { handleLogin, handleLogout } from "./src/api/handleAuthentication.js";
+import { checkOwnership } from "./src/api/checkOwnership.js";
 
 // Navigate to a specific URL
 function navigateTo(url) {
@@ -238,6 +239,8 @@ function renderActivityPage() {
     return;
   }
 
+  const personId = getPersonIdFromCookie();
+
   const mainContentDiv = document.querySelector(".main-content-component");
   mainContentDiv.innerHTML = getActivityPageTemplate();
 
@@ -249,8 +252,7 @@ function renderActivityPage() {
   resetRoutePanel();
   addRoutesLoader();
 
-  // TO DO: FETCH ACTIVITIES FOR USER
-  fetchRoutes()
+  fetchRoutes(null, null, personId)
     .then((routes) => {
       routes.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
       addRouteCards(routes);
@@ -264,7 +266,7 @@ function renderActivityPage() {
     });
 }
 
-export function renderEditPage() {
+export async function renderEditPage() {
   const loggedIn = getCookie('userToken');
 
   if (!loggedIn) {
@@ -272,31 +274,44 @@ export function renderEditPage() {
     return;
   }
 
-  const mainContentDiv = document.querySelector(".main-content-component");
-  mainContentDiv.innerHTML = getEditPageTemplate();
-
-  addEntityButton("update");
-  addAssistantButton();
-  addActionDropdown();
-  addStateButtons();
-  addCompareButtons();
-  addPaceSelector();
-  addLocationSearchBar();
-  addLocationButton();
-  addMapLoader();
-  
   const urlParams = new URLSearchParams(window.location.search);
   const routeId = urlParams.get("id");
 
-  // TO DO: CHECK IF ID IS ASSOCIATED TO USER ID
-
   if (!routeId) {
-    console.error("Route ID is missing.");
-    toastr.error("Oops, something went wrong.", "Error!");
+    window.location.href = '/';
     return;
   }
 
-  addFetchedMap(routeId);
+  const personId = getPersonIdFromCookie(loggedIn);
+
+  try {
+    const isOwnedByUser = await checkOwnership(routeId, personId);
+
+    if (!isOwnedByUser) {
+      window.location.href = '/';
+      return;
+    }
+
+    const mainContentDiv = document.querySelector(".main-content-component");
+    mainContentDiv.innerHTML = getEditPageTemplate();
+
+    addEntityButton("update");
+    addAssistantButton();
+    addActionDropdown();
+    addStateButtons();
+    addCompareButtons();
+    addPaceSelector();
+    addLocationSearchBar();
+    addLocationButton();
+    addMapLoader();
+
+    addFetchedMap(routeId);
+
+  } catch (error) {
+    console.error("Error during route editing:", error);
+    toastr.error("Oops, something went wrong.", "Error!");
+    window.location.href = '/';
+  }
 }
 
 // Render content based on URL

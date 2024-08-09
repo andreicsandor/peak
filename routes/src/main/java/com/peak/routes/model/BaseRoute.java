@@ -23,6 +23,9 @@ public abstract class BaseRoute {
     @Column(name = "created_time")
     private LocalDateTime createdTime;
 
+    @Column(name = "personId", nullable = false, length = 50)
+    private Long personId;
+
     public Long getId() {
         return id;
     }
@@ -61,5 +64,13 @@ public abstract class BaseRoute {
 
     public void setCreatedTime(LocalDateTime createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public Long getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
 }

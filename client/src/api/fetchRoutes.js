@@ -38,7 +38,7 @@ export async function fetchRoute(id) {
   return null;
 }
 
-export async function fetchRoutes(routeId = null, name = null) {
+export async function fetchRoutes(routeId = null, name = null, personId = null) {
   let url = `${API_ROUTES_URL}/get-routes`;
 
   const params = new URLSearchParams();
@@ -47,6 +47,9 @@ export async function fetchRoutes(routeId = null, name = null) {
   }
   if (name && name !== "") {
     params.append("name", name);
+  }
+  if (personId && personId !== "") {
+    params.append("personId", personId);
   }
 
   if (params.toString()) {
@@ -86,6 +89,7 @@ export async function fetchRoutes(routeId = null, name = null) {
       elevationGain: route.elevationGain,
       weatherMetrics: route.weatherMetrics,
       location: route.location,
+      personId: route.personId,
       createdTime: route.createdTime,
       importedRouteId: route.importedRouteId,
       percentageSimilarity: route.percentageSimilarity,
@@ -128,6 +132,7 @@ export async function fetchImportRoutes(id) {
       duration: route.duration,
       elevationGain: route.elevationGain,
       createdTime: route.createdTime,
+      personId: route.personId,
       routeId: route.routeId,
     });
   }

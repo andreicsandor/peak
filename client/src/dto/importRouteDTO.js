@@ -6,6 +6,7 @@ export class ImportRoute {
     geoCoordinates = "",
     createdTime = null,
     routeId = null,
+    personId = null,
   } = {}) {
     this.id = id;
     this.name = name;
@@ -13,5 +14,6 @@ export class ImportRoute {
     this.geoCoordinates = geoCoordinates;
     this.createdTime = createdTime;
     this.routeId = routeId;
+    this.personId = personId;
   }
 }

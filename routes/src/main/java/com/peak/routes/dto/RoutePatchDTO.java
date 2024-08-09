@@ -16,8 +16,8 @@ public class RoutePatchDTO extends BaseRouteDTO {
     public RoutePatchDTO() {
     }
 
-    public RoutePatchDTO(Long id, String name, String waypoints, String geoCoordinates, double distance, double duration, double elevationGain, String location, LocalDateTime createdTime, WeatherMetrics weatherMetrics, Long importedRouteId, Double percentageSimilarity) {
-        super(id, name, waypoints, geoCoordinates, createdTime);
+    public RoutePatchDTO(Long id, String name, String waypoints, String geoCoordinates, double distance, double duration, double elevationGain, String location, LocalDateTime createdTime, Long personId, WeatherMetrics weatherMetrics, Long importedRouteId, Double percentageSimilarity) {
+        super(id, name, waypoints, geoCoordinates, createdTime, personId);
         this.distance = distance;
         this.duration = duration;
         this.elevationGain = elevationGain;

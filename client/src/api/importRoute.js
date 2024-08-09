@@ -2,11 +2,14 @@ import { API_MAPS_URL } from "../config/apiConfig";
 import { ImportRoute } from "../dto/importRouteDTO";
 import { getAuthHeader } from "../utils/authUtils";
 
-export async function importRoute(file, routeId) {
+export async function importRoute(file, routeId, personId) {
   const formData = new FormData();
   formData.append("gpxFile", file);
   if (routeId !== null) {
     formData.append("routeId", routeId);
+  }
+  if (personId !== null) {
+    formData.append("personId", personId);
   }
 
   try {
@@ -34,6 +37,7 @@ export async function importRoute(file, routeId) {
             geoCoordinates: route.geoCoordinates,
             createdTime: route.createdTime,
             routeId: route.routeId,
+            personId: route.personId,
           })
       );
 

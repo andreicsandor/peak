@@ -8,8 +8,8 @@ public class ImportRouteDTO extends BaseRouteDTO {
     public ImportRouteDTO() {
     }
 
-    public ImportRouteDTO(Long id, String name, String waypoints, String geoCoordinates, LocalDateTime createdTime, Long routeId) {
-        super(id, name, waypoints, geoCoordinates, createdTime);
+    public ImportRouteDTO(Long id, String name, String waypoints, String geoCoordinates, LocalDateTime createdTime, Long personId, Long routeId) {
+        super(id, name, waypoints, geoCoordinates, createdTime, personId);
         this.routeId = routeId;
     }
 

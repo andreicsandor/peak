@@ -3,6 +3,7 @@ package com.peak.routes.service.impl;
 import com.peak.routes.dto.ImportRouteDTO;
 import com.peak.routes.mapper.ImportRouteMapper;
 import com.peak.routes.model.ImportRoute;
+import com.peak.routes.model.Route;
 import com.peak.routes.repository.ImportRouteDAO;
 import com.peak.routes.service.ImportRouteService;
 import io.jenetics.jpx.GPX;
@@ -13,6 +14,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -35,7 +37,7 @@ public class ImportRouteServiceImpl implements ImportRouteService {
     private final GeometryFactory geometryFactory = new GeometryFactory();
 
     @Override
-    public List<ImportRouteDTO> processImportRoute(MultipartFile file, Long routeId) {
+    public List<ImportRouteDTO> processImportRoute(MultipartFile file, Long routeId, Long personId) {
         try {
             GPX gpx = GPX.read(file.getInputStream());
             List<ImportRouteDTO> importRouteDTOs = new ArrayList<>();
@@ -54,6 +56,7 @@ public class ImportRouteServiceImpl implements ImportRouteService {
                 importRouteDTO.setGeoCoordinates(lineString.toText());
                 importRouteDTO.setName("Imported GPX Route");
                 importRouteDTO.setCreatedTime(LocalDateTime.now());
+                importRouteDTO.setPersonId(personId);
                 importRouteDTO.setRouteId(routeId);
 
                 importRouteDTOs.add(importRouteDTO);
@@ -103,6 +106,20 @@ public class ImportRouteServiceImpl implements ImportRouteService {
 
         ImportRoute device = importRouteEntity.get();
         importRouteDAO.delete(device);
+
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public Boolean deleteImportRoutesByPersonId(Long personId) {
+        List<ImportRoute> importRoutes = importRouteDAO.findByPersonId(personId);
+
+        if (importRoutes.isEmpty()) {
+            return true;
+        }
+
+        importRouteDAO.deleteAll(importRoutes);
 
         return true;
     }

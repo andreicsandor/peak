@@ -36,6 +36,7 @@ public class RouteMapper {
         }
         routeDTO.setLocation(route.getLocation());
         routeDTO.setCreatedTime(route.getCreatedTime());
+        routeDTO.setPersonId(route.getPersonId());
         routeDTO.setImportedRouteId(route.getImportedRouteId());
         routeDTO.setPercentageSimilarity(route.getPercentageSimilarity());
         routeDTO.setCompletedTime(route.getCompletedTime());
@@ -75,6 +76,7 @@ public class RouteMapper {
         route.setWeatherMetrics(routeDTO.getWeatherMetrics());
         route.setLocation(routeDTO.getLocation());
         route.setCreatedTime(routeDTO.getCreatedTime());
+        route.setPersonId(routeDTO.getPersonId());
         route.setImportedRouteId(routeDTO.getImportedRouteId());
         route.setPercentageSimilarity(routeDTO.getPercentageSimilarity());
         route.setCompletedTime(routeDTO.getCompletedTime());

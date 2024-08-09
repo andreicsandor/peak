@@ -28,7 +28,7 @@ public class PersonServiceImpl implements PersonService {
     @Qualifier("restTemplateUsers")
     private RestTemplate restTemplate;
 
-//    private String devicesServiceUrl = "http://localhost:8080";
+    private String routesServiceUrl = "http://localhost:8081";
 
     @Override
     public PersonDTO createPerson(NewPersonDTO newPersonDTO) {
@@ -78,7 +78,8 @@ public class PersonServiceImpl implements PersonService {
             return false;
         }
 
-//        restTemplate.delete(devicesServiceUrl + "/delete-devices/person/" + id);
+        restTemplate.delete(routesServiceUrl + "/api/routing/delete-routes/person/" + id);
+        restTemplate.delete(routesServiceUrl + "/api/importing/delete-routes/person/" + id);
 
         Person person = personEntity.get();
         personDAO.delete(person);

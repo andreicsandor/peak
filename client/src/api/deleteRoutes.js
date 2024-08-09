@@ -4,7 +4,7 @@ import { getAuthHeader } from "../utils/authUtils";
 export async function deleteRoute(id) {
   return fetch(`${API_ROUTES_URL}/delete-route/${id}`, {
     method: "DELETE",
-    headers: getAuthHeader(),
+    headers: { ...getAuthHeader() },
   })
     .then((response) => {
       if (!response.ok) {
@@ -20,7 +20,7 @@ export async function deleteRoute(id) {
 export async function deleteImportRoute(id) {
   return fetch(`${API_ROUTES_URL}/delete-import-route/${id}`, {
     method: "DELETE",
-    headers: getAuthHeader(),
+    headers: { ...getAuthHeader() },
   })
     .then((response) => {
       if (!response.ok) {

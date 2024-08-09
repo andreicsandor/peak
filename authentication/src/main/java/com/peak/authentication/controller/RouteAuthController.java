@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/auth/routes")
 @RestController
@@ -31,13 +32,21 @@ public class RouteAuthController {
 
     @GetMapping("/get-routes")
     @ResponseBody
-    public List<RouteDTO> getRoutes(@RequestParam(value = "id", required = false) Long id, @RequestParam(value = "name", required = false) String name) {
-        RouteDTO[] routes = restTemplate.exchange("http://localhost:8081/api/routing/routes" + (id != null ? "?id=" + id : (name != null ? "?name=" + name : "")), HttpMethod.GET, null, RouteDTO[].class).getBody();
+    public List<RouteDTO> getRoutes(@RequestParam(value = "id", required = false) Long id, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "personId", required = false) Long personId) {
+        RouteDTO[] routes = restTemplate.exchange(
+                "http://localhost:8081/api/routing/routes"
+                        + (id != null ? "?id=" + id : (name != null ? "?name=" + name : ""))
+                        + (personId != null ? (id != null || name != null ? "&" : "?") + "personId=" + personId : ""),
+                HttpMethod.GET,
+                null,
+                RouteDTO[].class
+        ).getBody();
         return List.of(routes);
     }
 
     @PostMapping("/save-route")
     public ResponseEntity<?> createRoute(@RequestBody NewRouteDTO newRouteDTO) {
+        System.out.println(newRouteDTO.getPersonId());
         HttpEntity<NewRouteDTO> request = new HttpEntity<>(newRouteDTO);
         return restTemplate.exchange("http://localhost:8081/api/routing/save-route", HttpMethod.POST, request, RouteDTO.class);
     }
@@ -70,6 +79,17 @@ public class RouteAuthController {
     @DeleteMapping("/delete-import-route/{id}")
     public ResponseEntity<?> deleteImportRoute(@PathVariable Long id) {
         return restTemplate.exchange("http://localhost:8081/api/importing/delete-route/{id}", HttpMethod.DELETE, null, String.class, id);
+    }
+
+    @PostMapping("/check-ownership")
+    public ResponseEntity<Map<String, Boolean>> checkOwnership(@RequestBody Map<String, Long> request) {
+        HttpEntity<Map<String, Long>> httpRequest = new HttpEntity<>(request);
+        return restTemplate.exchange(
+                "http://localhost:8081/api/routing/checkOwnership",
+                HttpMethod.POST,
+                httpRequest,
+                (Class<Map<String, Boolean>>)(Class<?>) Map.class
+        );
     }
 }
 

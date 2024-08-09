@@ -10,7 +10,8 @@ export async function saveRoute(
   coordinates,
   routeMetricsData,
   weatherMetricsData,
-  location
+  location,
+  personId
 ) {
   const waypointsWKT = `LINESTRING (${waypoints
     .map((waypoint) => `${waypoint.lng} ${waypoint.lat}`)
@@ -45,6 +46,7 @@ export async function saveRoute(
     elevationGain: elevationGain,
     weatherMetrics: weatherMetrics,
     location: location,
+    personId: personId,
   });
 
   try {
@@ -74,6 +76,7 @@ export async function uploadImportRoute(importRoute) {
     waypoints: importRoute.waypoints,
     geoCoordinates: importRoute.geoCoordinates,
     createdTime: importRoute.createdTime || new Date().toISOString(),
+    personId: importRoute.personId,
     routeId: importRoute.routeId,
   });
 

@@ -16,11 +16,12 @@ public class ImportRoute extends BaseRoute {
 
     public ImportRoute() {}
 
-    public ImportRoute(String name, LineString waypoints, LineString geoCoordinates, LocalDateTime createdTime, Long routeId) {
+    public ImportRoute(String name, LineString waypoints, LineString geoCoordinates, LocalDateTime createdTime, Long personId, Long routeId) {
         super.setName(name);
         super.setWaypoints(waypoints);
         super.setGeoCoordinates(geoCoordinates);
         super.setCreatedTime(createdTime);
+        super.setPersonId(personId);
         this.routeId = routeId;
     }
 

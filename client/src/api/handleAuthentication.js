@@ -17,7 +17,6 @@ export function handleLogin(event) {
   })
   .then(response => {
     if (!response.ok) {
-      console.log(response);
       throw new Error('Login failed');
     }
     return response.json();

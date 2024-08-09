@@ -12,7 +12,8 @@ export async function updateRoute(
   weatherMetricsData,
   location,
   importedRouteId = null,
-  percentageSimilarity = null
+  percentageSimilarity = null,
+  personId,
 ) {
   const waypointsWKT = `LINESTRING (${waypoints
     .map((waypoint) => `${waypoint.lng} ${waypoint.lat}`)
@@ -51,8 +52,9 @@ export async function updateRoute(
     elevationGain: elevationGain,
     weatherMetrics: weatherMetrics,
     location: location,
+    personId: personId,
     importedRouteId: importedRouteId,
-    percentageSimilarity: percentageSimilarity
+    percentageSimilarity: percentageSimilarity,
   });
 
   try {

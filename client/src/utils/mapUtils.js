@@ -43,6 +43,7 @@ import { WeatherMetrics } from "../dto/weatherMetricsDTO.js";
 import { fetchTips } from "../api/fetchTips.js";
 import { Route } from "../dto/routeDTO.js";
 import { addAssistantOverlay } from "../components/createAssistantControls.js";
+import { getPersonIdFromCookie } from "./authUtils.js";
 
 toastr.options = toastrOptions;
 
@@ -538,6 +539,8 @@ export async function handleRedo() {
 }
 
 export async function handleSave() {
+  const personId = getPersonIdFromCookie();
+
   const { routeManager, elevationManager, weatherManager } =
     globalManager.getManagers();
   const waypoints = routeManager.getWaypoints();
@@ -573,7 +576,8 @@ export async function handleSave() {
       formattedGeoCoordinates,
       routeMetricsData,
       weatherMetricsData,
-      location
+      location,
+      personId
     );
     toastr.success("Route saved successfully.");
   } catch (error) {
@@ -583,6 +587,7 @@ export async function handleSave() {
 }
 
 export async function handleUpdate(id) {
+  const personId = getPersonIdFromCookie();
   const { routeManager, elevationManager, weatherManager, importManager } =
     globalManager.getManagers();
   const waypoints = routeManager.getWaypoints();
@@ -646,7 +651,8 @@ export async function handleUpdate(id) {
       weatherMetricsData,
       location,
       importedRouteId,
-      percentageSimilarity
+      percentageSimilarity,
+      personId,
     );
 
     toastr.success("Route updated successfully.");
@@ -673,6 +679,8 @@ export async function handleDelete(routeId, importedRouteId) {
 export async function handleImport(event) {
   event.preventDefault();
 
+  const personId = getPersonIdFromCookie();
+
   const { importManager, map } = globalManager.getManagers();
 
   const file = document.getElementById("fileInput").files[0];
@@ -685,7 +693,7 @@ export async function handleImport(event) {
   }
 
   try {
-    const { routes, percentageSimilarity } = await importRoute(file, routeId);
+    const { routes, percentageSimilarity } = await importRoute(file, routeId, personId);
     if (routes.length > 0) {
       const importedRoute = routes[0];
       importManager.setImportedRoute(importedRoute);

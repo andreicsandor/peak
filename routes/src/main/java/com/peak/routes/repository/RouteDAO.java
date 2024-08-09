@@ -12,4 +12,5 @@ public interface RouteDAO extends CrudRepository<Route, Long> {
     Iterable<Route> findAll();
     Optional<Route> findById(Long id);
     List<Route> findByName(String name);
+    List<Route> findByPersonId(Long personId);
 }

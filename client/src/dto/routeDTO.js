@@ -10,6 +10,7 @@ export class Route {
     weatherMetrics = null,
     location = "",
     createdTime = null,
+    personId = null,
     importedRouteId = null,
     percentageSimilarity = null,
     completedTime = null,
@@ -24,6 +25,7 @@ export class Route {
     this.elevationGain = elevationGain;
     this.location = location;
     this.createdTime = createdTime;
+    this.personId = personId;
     this.importedRouteId = importedRouteId;
     this.percentageSimilarity = percentageSimilarity;
     this.completedTime = completedTime;

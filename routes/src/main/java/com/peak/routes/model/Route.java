@@ -32,7 +32,6 @@ public class Route extends BaseRoute {
     @Column(name = "completed_time")
     private LocalDateTime completedTime;
 
-    // Getters and Setters
     public double getDistance() {
         return distance;
     }
