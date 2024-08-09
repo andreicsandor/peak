@@ -151,7 +151,6 @@ function clickRouteHandler(route) {
     })
     .catch((error) => {
       console.error("Error fetching route data:", error);
-      toastr.error("Oops, something went wrong.", "Error!");
     })
     .finally(() => {
       setTimeout(() => {
