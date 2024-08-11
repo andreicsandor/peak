@@ -70,7 +70,7 @@ function getRunPageTemplate() {
             <div class="assistant-container"></div>
           </div>
           <div class="map-message hidden">
-            <p>Rotate your device to see the map.</p>
+            <p>Rotate your device to see the map</p>
           </div>
           <div class="map-loader hidden">
             <i class="fa-solid fa-map fa-fade fa-2xl" style="color: #c9c9d9;"></i>
@@ -353,7 +353,7 @@ function handleOrientationChange() {
   const mapWrapper = document.querySelector('.map-wrapper');
   const mapMessage = document.querySelector('.map-message');
 
-  if (window.innerWidth > 809) {
+  if (window.innerWidth > 768) {
     menuWrapper.style.display = 'flex';
     mapWrapper.style.display = 'block';
     mapMessage.classList.add('hidden');

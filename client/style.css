@@ -1188,7 +1188,9 @@ input[type="number"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 65vh;
+  color: var(--secondary-color);
+  font-weight: bold;
+  height: 75vh;
 }
 
 /* Input styles */
@@ -1282,7 +1284,8 @@ input[type="number"] {
   transform: translateX(50%) !important;
 }
 
-/* Responsiveness & Media Queries*/
+/* Responsiveness & Media Queries */
+
 /* Max width 1500px */
 @media only screen and (max-width: 1500px) {
   .overlay-header {
@@ -1311,7 +1314,10 @@ input[type="number"] {
     font-size: smaller;
   }
 
-  .state-container, .entity-container, .action-container, .assistant-container {
+  .state-container, 
+  .entity-container, 
+  .action-container, 
+  .assistant-container {
     justify-content: center;
   }
 }
@@ -1319,10 +1325,15 @@ input[type="number"] {
 /* Max width 1024px */
 @media only screen and (max-width: 1024px) {
   .map-message {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    font-size: var(--h3-font-size);
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: var(--h2-font-size);
     padding: var(--large-padding);
+    height: 80vh;
   }
 
   .dashboard-section {
@@ -1363,13 +1374,10 @@ input[type="number"] {
 
   .weather-location,
   .weather-description,
-  .weather-date-time {
-    font-size: small;
-  }
-
+  .weather-date-time,
   .dashboard-info-title,
   .dashboard-pace-title {
-    font-size: smaller;
+    font-size: small;
   }
 
   .dashboard-info-value,
@@ -1388,19 +1396,7 @@ input[type="number"] {
   .pace-selector span {
     font-size: medium;
   }
-}
 
-/* Max height 500px */
-@media only screen and (max-height: 500px) {
-  .dashboard-forecast-overlay {
-    top: 50%;
-    width: 85%;
-    max-height: 90%;
-  }
-}
-
-/* Max width 1024px */
-@media only screen and (max-width: 1024px) {
   .activity-section {
     display: block;
   }
@@ -1419,6 +1415,24 @@ input[type="number"] {
   }
 }
 
+/* Max width 900px */
+@media only screen and (max-width: 900px) {
+  .activity-section {
+    flex-direction: column-reverse;
+  }
+
+  .panel-section {
+    width: 100%;
+    margin-top: var(--medium-padding);
+    order: 1;
+  }
+
+  .routes-section {
+    width: 100%;
+    order: 2;
+  }
+}
+
 /* Max width 768px */
 @media only screen and (max-width: 768px) {
   .map-wrapper {
@@ -1432,6 +1446,8 @@ input[type="number"] {
 
   .route-card {
     padding: 0.5rem 0.5rem;
+    width: 100%;
+    margin: auto;
   }
 
   .route-card .card-body {
@@ -1442,24 +1458,25 @@ input[type="number"] {
     font-size: var(--h3-font-size);
   }
   
-  .route-card .route-date {
+  .route-card .route-date,
+  .metric-label {
     font-size: small;
   }
-  
+
   .metric-value {
     font-size: medium;
   }
 
   .metric-label {
-    font-size: small;
-  }
-
-  .metric-label {
     margin-bottom: 5px;
   }
+}
 
-  .route-card {
-    width: 100%;
-    margin: auto;
+/* Max height 500px */
+@media only screen and (max-height: 500px) {
+  .dashboard-forecast-overlay {
+    top: 50%;
+    width: 85%;
+    max-height: 90%;
   }
 }
