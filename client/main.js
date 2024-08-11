@@ -96,7 +96,7 @@ function getEditPageTemplate() {
   return `
     <div id="content">
       <div class="dashboard-section">
-        <div class="dashboard-edit-wrapper">
+        <div class="dashboard-wrapper">
           <div class="dashboard-menu-wrapper hidden">
             <div class="entity-container"></div>
             <div class="button-group">
@@ -311,8 +311,8 @@ export async function renderEditPage() {
     addPaceSelector();
     addLocationSearchBar();
     addLocationButton();
+    handleOrientationChange();
     addMapLoader();
-
     addFetchedMap(routeId);
 
   } catch (error) {

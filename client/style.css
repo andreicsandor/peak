@@ -111,16 +111,6 @@ h3 {
   min-height: 75vh;
 }
 
-.dashboard-edit-wrapper {
-  background: var(--background-light);
-  border-radius: 15px;
-  box-shadow: var(--soft-shadow);
-  flex: 1;
-  padding: var(--medium-padding);
-  padding-bottom: var(--small-padding);
-  min-height: 75vh;
-}
-
 .dashboard-menu-wrapper {
   display: flex;
   justify-content: space-between;
@@ -1478,5 +1468,18 @@ input[type="number"] {
     top: 50%;
     width: 85%;
     max-height: 90%;
+  }
+
+  .dashboard-assistant-overlay {
+    top: 50%;
+    max-height: 90%;
+  }
+
+  .overlay-recommendation {
+    margin-top: 1rem;
+  }
+
+  .recommendation-text {
+    font-size: var(--h4-font-size);
   }
 }
