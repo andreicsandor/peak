@@ -285,7 +285,7 @@ input[type="number"] {
 }
 
 /* Container styles */
-.entity-container, .action-container, .state-container {
+.entity-container, .action-container, .state-container, .assistant-container {
   align-items: center;
   display: flex;
   justify-content: flex-end;
@@ -520,7 +520,8 @@ input[type="number"] {
   transition: var(--transition-speed);
   display: flex;
   align-items: center;
-  gap: 10px; /* Add gap between search bar and location button */
+  gap: 10px;
+  max-width: 30%;
 }
 
 .dashboard-search-wrapper:hover {
@@ -554,6 +555,7 @@ input[type="number"] {
   outline: none;
   flex: 1;
   margin-right: 0.5rem;
+  width: 100%;
 }
 
 .search-bar button {
@@ -647,6 +649,7 @@ input[type="number"] {
   border-radius: 15px;
   padding: 0.7rem;
   transition: var(--transition-speed);
+  max-width: 20%;
 }
 
 .dashboard-weather-wrapper:hover {
@@ -1103,6 +1106,7 @@ input[type="number"] {
   cursor: pointer;
   display: flex;
   font-weight: bolder;
+  font-size: small;
   justify-content: center;
   margin-right: 0.5rem;
   padding: 0.5rem 1rem; 
@@ -1276,4 +1280,186 @@ input[type="number"] {
   top: 12px !important;
   right: 50% !important;
   transform: translateX(50%) !important;
+}
+
+/* Responsiveness & Media Queries*/
+/* Max width 1500px */
+@media only screen and (max-width: 1500px) {
+  .overlay-header {
+    padding-top: 1rem;
+  }
+
+  .dashboard-forecast-overlay {
+    top: 50%;
+    width: 85%;
+    max-height: 75%;
+  }
+
+  .forecast-card {
+    margin: 1rem auto;
+  }
+
+  .forecast-heading {
+    font-size: medium;
+  }
+
+  .sticky-heading {
+    padding: 1.5rem 0rem 1rem 0rem;
+  }
+
+  .sort-button {
+    font-size: smaller;
+  }
+
+  .state-container, .entity-container, .action-container, .assistant-container {
+    justify-content: center;
+  }
+}
+
+/* Max width 1024px */
+@media only screen and (max-width: 1024px) {
+  .map-message {
+    display: block;
+    text-align: center;
+    font-size: var(--h3-font-size);
+    padding: var(--large-padding);
+  }
+
+  .dashboard-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dashboard-wrapper,
+  .panel-section {
+    width: 100%;
+    padding: var(--small-padding);
+    margin-bottom: var(--medium-padding);
+    min-height: auto;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .map-wrapper {
+    display: none;
+  }
+
+  .panel-section-message {
+    font-size: 1rem;
+  }
+
+  .dashboard-info-wrapper,
+  .dashboard-pace-wrapper,
+  .dashboard-weather-wrapper {
+    padding: 0.5rem;
+  }
+
+  .dashboard-info-wrapper {
+    min-width: 60%;
+  }
+
+  .weather-location,
+  .weather-description,
+  .weather-date-time {
+    font-size: small;
+  }
+
+  .dashboard-info-title,
+  .dashboard-pace-title {
+    font-size: smaller;
+  }
+
+  .dashboard-info-value,
+  .dashboard-info-small-value,
+  .pace-minutes-input,
+  .pace-seconds-input,
+  .weather-temperature {
+    font-size: medium;
+  }
+
+  .pace-minutes-input,
+  .pace-seconds-input {
+    width: 30px;
+  }
+
+  .pace-selector span {
+    font-size: medium;
+  }
+}
+
+/* Max height 500px */
+@media only screen and (max-height: 500px) {
+  .dashboard-forecast-overlay {
+    top: 50%;
+    width: 85%;
+    max-height: 90%;
+  }
+}
+
+/* Max width 1024px */
+@media only screen and (max-width: 1024px) {
+  .activity-section {
+    display: block;
+  }
+
+  .panel-section {
+    display: none;
+  }
+
+  .route-card {
+    width: 60%;
+    margin: auto;
+  }
+
+  .action-container {
+    margin-bottom: 0rem;
+  }
+}
+
+/* Max width 768px */
+@media only screen and (max-width: 768px) {
+  .map-wrapper {
+    display: none;
+  }
+
+  .route-metrics {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .route-card {
+    padding: 0.5rem 0.5rem;
+  }
+
+  .route-card .card-body {
+    padding: 0.5rem;
+  }
+
+  .route-card .route-title {
+    font-size: var(--h3-font-size);
+  }
+  
+  .route-card .route-date {
+    font-size: small;
+  }
+  
+  .metric-value {
+    font-size: medium;
+  }
+
+  .metric-label {
+    font-size: small;
+  }
+
+  .metric-label {
+    margin-bottom: 5px;
+  }
+
+  .route-card {
+    width: 100%;
+    margin: auto;
+  }
 }

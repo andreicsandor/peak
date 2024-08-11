@@ -13,7 +13,7 @@ export async function addLocationSearchBar() {
       const contentMarkup = `
         <div class="dashboard-search-container">
           <div class="search-bar">
-            <input type="text" id="city-search-input" placeholder="Search here">
+            <input type="text" id="city-search-input" placeholder="Search">
               <button id="search-button"></button>
             </div>
             <div class="dashboard-location-wrapper hidden">

@@ -1,6 +1,7 @@
 import {
   addMapLoader,
   addRoutesLoader,
+  removeMapLoader,
   removeRoutesLoader,
 } from "./src/components/createLoader";
 import {
@@ -13,7 +14,7 @@ import {
 import { addEmptyMap, addFetchedMap } from "./src/components/createMap.js";
 import { addPaceSelector } from "./src/components/createPaceSelector.js";
 import { fetchRoutes } from "./src/api/fetchRoutes.js";
-import { addRouteCards } from "./src/utils/interfaceUtils.js";
+import { addRouteCards, deactivateDashboardControls, deactivateMapControls, hideDashboard } from "./src/utils/interfaceUtils.js";
 import { resetRoutePanel } from "./src/components/createRoutePanel.js";
 import { addLocationSearchBar } from "./src/components/createSearchControls.js";
 import { addLocationButton } from "./src/components/createSearchControls.js";
@@ -68,6 +69,9 @@ function getRunPageTemplate() {
             </div>
             <div class="assistant-container"></div>
           </div>
+          <div class="map-message hidden">
+            <p>Rotate your device to see the map.</p>
+          </div>
           <div class="map-loader hidden">
             <i class="fa-solid fa-map fa-fade fa-2xl" style="color: #c9c9d9;"></i>
           </div>
@@ -100,6 +104,9 @@ function getEditPageTemplate() {
               <div class="state-container"></div>
             </div>
             <div class="assistant-container"></div>
+          </div>
+          <div class="map-message hidden">
+            <p>Rotate your device to see the map.</p>
           </div>
           <div class="map-loader hidden">
             <i class="fa-solid fa-map fa-fade fa-2xl" style="color: #c9c9d9;"></i>
@@ -227,6 +234,7 @@ function renderRunPage() {
   addLocationSearchBar();
   addLocationButton();
   addWeatherWidget();
+  handleOrientationChange();
   addMapLoader();
   addEmptyMap();
 }
@@ -336,3 +344,30 @@ function renderContent(url) {
 setupNavigationEvents();
 setupPopstateEvent();
 setupInitialPage();
+
+// Resizing & orientation scripts
+function handleOrientationChange() {
+  removeMapLoader();
+
+  const menuWrapper = document.querySelector(".dashboard-menu-wrapper");
+  const mapWrapper = document.querySelector('.map-wrapper');
+  const mapMessage = document.querySelector('.map-message');
+
+  if (window.innerWidth > 809) {
+    menuWrapper.style.display = 'flex';
+    mapWrapper.style.display = 'block';
+    mapMessage.classList.add('hidden');
+  } else if (window.innerHeight > window.innerWidth) {
+    menuWrapper.style.display = 'none';
+    mapWrapper.style.display = 'none';
+    mapMessage.classList.remove('hidden');
+  } else {
+    menuWrapper.style.display = 'flex';
+    mapWrapper.style.display = 'block';
+    mapMessage.classList.add('hidden');
+  }
+}
+
+window.addEventListener('resize', handleOrientationChange);
+window.addEventListener('orientationchange', handleOrientationChange);
+document.addEventListener('DOMContentLoaded', handleOrientationChange);
