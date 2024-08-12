@@ -4,7 +4,7 @@ import {
   API_USERS_URL,
   API_REGISTER_URL,
 } from "../config/apiConfig";
-import { formatDatePicker } from "../utils/interfaceUtils";
+import { formatDatePicker } from "./interfaceUtils";
 import { addAthleticismLabel } from "../components/createProfilePanel";
 
 export function handleRegister(event) {

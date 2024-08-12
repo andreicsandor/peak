@@ -43,7 +43,7 @@ import { WeatherMetrics } from "../dto/weatherMetricsDTO.js";
 import { fetchTips } from "../api/fetchTips.js";
 import { Route } from "../dto/routeDTO.js";
 import { addAssistantOverlay } from "../components/createAssistantControls.js";
-import { getPersonIdFromCookie } from "./authUtils.js";
+import { getPersonIdFromCookie } from "./profileUtils.js";
 
 toastr.options = toastrOptions;
 

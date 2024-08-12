@@ -1,5 +1,5 @@
 import { API_MAPS_URL } from "../config/apiConfig";
-import { getAuthHeader } from "../utils/authUtils";
+import { getAuthHeader } from "../utils/profileUtils";
 
 export async function fetchElevationForPath(encodedPolylines) {
   const samples = "512";
