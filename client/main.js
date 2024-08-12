@@ -1,7 +1,8 @@
 import {
   addMapLoader,
+  addProfileLoader,
   addRoutesLoader,
-  removeMapLoader,
+  removeProfileLoader,
   removeRoutesLoader,
 } from "./src/components/createLoader";
 import {
@@ -20,18 +21,20 @@ import { addLocationSearchBar } from "./src/components/createSearchControls.js";
 import { addLocationButton } from "./src/components/createSearchControls.js";
 import { addWeatherWidget } from "./src/components/createWeatherControls.js";
 import { getCookie, getPersonIdFromCookie } from "./src/utils/authUtils.js";
+import { checkOwnership } from "./src/api/checkOwnership.js";
+import {
+  setupOptionButtonEvents
+} from "./src/components/createProfilePanel.js";
 import {
   handleLogin,
   handleLogout,
   handleRegister,
-} from "./src/api/handleAuthentication.js";
-import { checkOwnership } from "./src/api/checkOwnership.js";
-import {
-  setupDatePicker,
-  setupDefaultValues,
-  setupDeleteProfileEvent,
-  setupOptionButtonEvents,
-} from "./src/components/createProfileTemplate.js";
+  handleProfileFetch,
+  handleProfileUpdate,
+  handleProfileDelete,
+} from "./src/utils/authUtils.js"
+import { formatDatePicker } from "./src/utils/interfaceUtils.js";
+import { addDefaultBodyMetrics } from "./src/components/createProfilePanel.js";
 
 // Navigate to a specific URL
 function navigateTo(url) {
@@ -248,7 +251,12 @@ function getProfilePageTemplate() {
 
   return `
     <div class="profile-section">
-      <div class="profile-wrapper">
+      <div class="profile-loader-wrapper hidden">
+        <div class="profile-loader">
+          <i class="fa-solid fa-user fa-fade fa-2xl" style="color: #c9c9d9;"></i>
+        </div>
+      </div>
+      <div class="profile-wrapper hidden">
         <p class="profile-title">My Profile</p>
         <div class="input-group">
           <label class="label-custom" for="firstName">First Name</label>
@@ -263,21 +271,23 @@ function getProfilePageTemplate() {
           <input type="text" id="username" class="input-custom input-wide" placeholder="Enter username" required>
         </div>
         <div class="input-group">
+            <label class="label-custom" for="password">Password</label>
+            <input type="password" id="password" class="input-custom input-wide" placeholder="Enter password" required>
+        </div>
+        <div class="input-group">
           <label class="label-custom" for="birthdate">Birthdate</label>
-          <div class="input-group">
-            <label class="label-custom" for="birthdate">Birthdate</label>
-            <input 
-            type="text" 
-            id="birthdate" 
-            class="input-custom input-wide" 
-            placeholder="Select birthdate" 
-            value="${defaultBirthdateString}" 
-            required
-            onfocus="(this.type='date')" 
-            onblur="(this.type='text')" 
-            onclick="this.type='date'"
-            onkeydown="return false;"
-          >
+          <input 
+          type="text" 
+          id="birthdate" 
+          class="input-custom input-wide" 
+          placeholder="Select birthdate" 
+          value="${defaultBirthdateString}" 
+          required
+          onfocus="(this.type='date')" 
+          onblur="(this.type='text')" 
+          onclick="this.type='date'"
+          onkeydown="return false;"
+        >
         </div>
          <div class="input-group">
           <label class="label-custom" for="gender">Gender</label>
@@ -403,8 +413,8 @@ function renderRegisterPage() {
   mainContentDiv.innerHTML = getRegisterPageTemplate();
 
   setupOptionButtonEvents();
-  setupDatePicker();
-  setupDefaultValues();
+  formatDatePicker();
+  addDefaultBodyMetrics();
   setupRegisterForm();
   setupLoginRedirect();
 }
@@ -536,7 +546,6 @@ export async function renderEditPage() {
 
 export async function renderProfilePage() {
   const loggedIn = getCookie("userToken");
-
   if (!loggedIn) {
     window.location.href = "/";
     return;
@@ -545,10 +554,24 @@ export async function renderProfilePage() {
   const mainContentDiv = document.querySelector(".main-content-component");
   mainContentDiv.innerHTML = getProfilePageTemplate();
 
+  addProfileLoader();
   setupOptionButtonEvents();
-  setupDeleteProfileEvent();
-  setupDatePicker();
-  setupDefaultValues();
+  handleProfileFetch();
+
+  const updateProfileButton = document.getElementById("update-profile-button");
+  if (updateProfileButton) {
+    updateProfileButton.addEventListener("click", handleProfileUpdate);
+  }
+
+  const deleteProfileButton = document.getElementById("delete-profile-button");
+  if (deleteProfileButton) {
+    deleteProfileButton.addEventListener("click", handleProfileDelete);
+  }
+
+  formatDatePicker();
+  setTimeout(() => {
+    removeProfileLoader();
+  }, 500);
 }
 
 // Render content based on URL

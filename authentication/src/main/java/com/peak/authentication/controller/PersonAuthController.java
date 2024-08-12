@@ -27,8 +27,25 @@ public class PersonAuthController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/get-persons")
     @ResponseBody
-    public List<PersonDTO> getPersons(){
-        PersonDTO[] persons = restTemplate.exchange("http://localhost:8080/api/users/persons", HttpMethod.GET, null, PersonDTO[].class).getBody();
+    public List<PersonDTO> getPersons(
+            @RequestParam(value = "personId", required = false) Long personId,
+            @RequestParam(value = "username", required = false) String username) {
+        StringBuilder urlBuilder = new StringBuilder("http://localhost:8080/api/users/persons");
+        
+        if (personId != null || username != null) {
+            urlBuilder.append("?");
+            if (personId != null) {
+                urlBuilder.append("personId=").append(personId);
+            }
+            if (username != null) {
+                if (personId != null) {
+                    urlBuilder.append("&");
+                }
+                urlBuilder.append("username=").append(username);
+            }
+        }
+
+        PersonDTO[] persons = restTemplate.exchange(urlBuilder.toString(), HttpMethod.GET, null, PersonDTO[].class).getBody();
         return List.of(persons);
     }
 

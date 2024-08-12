@@ -31,6 +31,8 @@ public class PersonController {
                                       @RequestParam(value = "username", required = false) String username) {
         List<PersonDTO> persons;
 
+        System.out.println(id);
+
         if (id != null) {
             persons = personService.findPersonById(id);
         } else if (username != null) {

@@ -27,3 +27,19 @@ export function removePanelLoader() {
   const loader = document.querySelector(".panel-loader");
   loader.classList.add("hidden");
 }
+
+export function addProfileLoader() {
+  const profileWrapper = document.querySelector(".profile-wrapper");
+  profileWrapper.classList.add("hidden");
+
+  const loaderWrapper = document.querySelector(".profile-loader-wrapper");
+  loaderWrapper.classList.remove("hidden"); 
+}
+
+export function removeProfileLoader() {
+  const loaderWrapper = document.querySelector(".profile-loader-wrapper");
+  loaderWrapper.classList.add("hidden");
+
+  const profileWrapper = document.querySelector(".profile-wrapper");
+  profileWrapper.classList.remove("hidden");
+}

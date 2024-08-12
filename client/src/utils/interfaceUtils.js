@@ -416,3 +416,38 @@ export function typeText(element, text, delay = 20) {
     }
   }, delay);
 }
+
+export function formatDatePicker() {
+  const birthdateInput = document.getElementById("birthdate");
+
+  if (!birthdateInput) return;
+
+  if (birthdateInput.value) {
+    const date = new Date(birthdateInput.value);
+    if (!isNaN(date.getTime())) {
+      const options = { year: "numeric", month: "short", day: "numeric" };
+      birthdateInput.value = date.toLocaleDateString("en-US", options);
+    }
+  }
+
+  birthdateInput.addEventListener("focus", function () {
+    this.type = "date";
+    this.showPicker();
+  });
+
+  birthdateInput.addEventListener("change", function () {
+    const date = new Date(this.value);
+    if (!isNaN(date.getTime())) {
+      const options = { year: "numeric", month: "short", day: "numeric" };
+      const formattedDate = date.toLocaleDateString("en-US", options);
+      this.type = "text";
+      this.value = formattedDate;
+    }
+  });
+
+  birthdateInput.addEventListener("blur", function () {
+    if (this.value === "") {
+      this.type = "text";
+    }
+  });
+}

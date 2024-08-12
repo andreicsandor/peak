@@ -1080,7 +1080,7 @@ input[type="number"] {
   margin: 20px var(--large-padding);
 }
 
-.profile-wrapper {
+.profile-wrapper, .profile-loader-wrapper {
   background: var(--background-light);
   border-radius: 15px;
   box-shadow: var(--soft-shadow);
@@ -1089,13 +1089,17 @@ input[type="number"] {
   max-width: 400px;
 }
 
+.profile-loader-wrapper {
+  height: 100vh;
+}
+
 .profile-wrapper .input-group {
   margin-bottom: 0.5rem;
 }
 
 .profile-wrapper .athleticism-output {
   margin: var(--base-margin) 0;
-  font-size: medium;
+  font-size: var(--h4-font-size);
   color: var(--primary-color);
   text-align: center;
   font-weight: bold;
@@ -1475,7 +1479,8 @@ input[type="number"] {
 
 .map-loader,
 .routes-loader,
-.panel-loader {
+.panel-loader,
+.profile-loader {
   display: flex;
   justify-content: center;
   align-items: center;
