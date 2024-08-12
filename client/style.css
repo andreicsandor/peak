@@ -1160,11 +1160,11 @@ input[type="number"] {
 }
 
 .input-custom::placeholder {
-  color: #999;
+  color: var(--secondary-color);
 }
 
 .input-custom:focus::placeholder {
-  color: #999;
+  color: var(--secondary-color);
 }
 
 .input-custom:hover,
@@ -1188,7 +1188,7 @@ input[type="number"] {
 
 .label-custom {
   font-size: smaller;
-  color: #ccc;
+  color: var(--background-medium);
   font-weight: bold;
   margin: 0.5rem;
 }
