@@ -22,9 +22,7 @@ import { addLocationButton } from "./src/components/createSearchControls.js";
 import { addWeatherWidget } from "./src/components/createWeatherControls.js";
 import { getCookie, getPersonIdFromCookie } from "./src/utils/authUtils.js";
 import { checkOwnership } from "./src/api/checkOwnership.js";
-import {
-  setupOptionButtonEvents
-} from "./src/components/createProfilePanel.js";
+import { setupOptionButtonEvents } from "./src/components/createProfilePanel.js";
 import {
   handleLogin,
   handleLogout,
@@ -32,8 +30,11 @@ import {
   handleProfileFetch,
   handleProfileUpdate,
   handleProfileDelete,
-} from "./src/utils/authUtils.js"
-import { formatDatePicker } from "./src/utils/interfaceUtils.js";
+} from "./src/utils/authUtils.js";
+import {
+  formatDatePicker,
+  validateNumericInput,
+} from "./src/utils/interfaceUtils.js";
 import { addDefaultBodyMetrics } from "./src/components/createProfilePanel.js";
 
 // Navigate to a specific URL
@@ -99,11 +100,11 @@ function getRegisterPageTemplate() {
           <div class="input-group-horizontal">
             <div class="input-group-half">
               <label class="label-custom" for="weight">Weight kg.</label>
-              <input type="number" id="weight" class="input-custom input-half" placeholder="Enter weight" required>
+              <input type="number" id="weight" class="input-custom input-half" placeholder="Enter weight" required inputmode="numeric" min="30" max="200" step="0.1">
             </div>
             <div class="input-group-half">
               <label class="label-custom" for="height">Height cm.</label>
-              <input type="number" id="height" class="input-custom input-half" placeholder="Enter height" required>
+              <input type="number" id="height" class="input-custom input-half" placeholder="Enter height" required inputmode="numeric" min="100" max="250" step="0.1">
             </div>
           </div>
           <div class="input-group">
@@ -299,11 +300,11 @@ function getProfilePageTemplate() {
         <div class="input-group-horizontal">
           <div class="input-group-half">
             <label class="label-custom" for="weight">Weight kg.</label>
-            <input type="number" id="weight" class="input-custom input-half" placeholder="Enter weight" required>
+            <input type="number" id="weight" class="input-custom input-half" placeholder="Enter weight" required inputmode="numeric" min="30" max="200" step="0.1">
           </div>
           <div class="input-group-half">
             <label class="label-custom" for="height">Height cm.</label>
-            <input type="number" id="height" class="input-custom input-half" placeholder="Enter height" required>
+            <input type="number" id="height" class="input-custom input-half" placeholder="Enter height" required inputmode="numeric" min="100" max="250" step="0.1">
           </div>
         </div>
         <div class="input-group">
@@ -414,6 +415,7 @@ function renderRegisterPage() {
 
   setupOptionButtonEvents();
   formatDatePicker();
+  validateNumericInput();
   addDefaultBodyMetrics();
   setupRegisterForm();
   setupLoginRedirect();
@@ -556,22 +558,29 @@ export async function renderProfilePage() {
 
   addProfileLoader();
   setupOptionButtonEvents();
-  handleProfileFetch();
 
-  const updateProfileButton = document.getElementById("update-profile-button");
-  if (updateProfileButton) {
-    updateProfileButton.addEventListener("click", handleProfileUpdate);
+  try {
+    await handleProfileFetch();
+
+    const updateProfileButton = document.getElementById("update-profile-button");
+    if (updateProfileButton) {
+      updateProfileButton.addEventListener("click", handleProfileUpdate);
+    }
+
+    const deleteProfileButton = document.getElementById("delete-profile-button");
+    if (deleteProfileButton) {
+      deleteProfileButton.addEventListener("click", handleProfileDelete);
+    }
+
+    formatDatePicker();
+    validateNumericInput();
+
+    setTimeout(() => {
+      removeProfileLoader();
+    }, 500);
+  } catch (error) {
+    console.error("Failed to fetch profile data:", error);
   }
-
-  const deleteProfileButton = document.getElementById("delete-profile-button");
-  if (deleteProfileButton) {
-    deleteProfileButton.addEventListener("click", handleProfileDelete);
-  }
-
-  formatDatePicker();
-  setTimeout(() => {
-    removeProfileLoader();
-  }, 500);
 }
 
 // Render content based on URL

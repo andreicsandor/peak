@@ -16,21 +16,6 @@ export function handleRegister(event) {
   const heightElement = document.getElementById("height");
   const workoutButton = document.querySelector(".option-button.active");
 
-  if (
-    !usernameElement ||
-    !passwordElement ||
-    !firstNameElement ||
-    !lastNameElement ||
-    !birthdateElement ||
-    !genderElement ||
-    !weightElement ||
-    !heightElement ||
-    !workoutButton
-  ) {
-    toastr.info("Fill in all registration fields.");
-    return;
-  }
-
   const username = usernameElement.value;
   const password = passwordElement.value;
   const firstName = firstNameElement.value;
@@ -43,6 +28,21 @@ export function handleRegister(event) {
   const weight = weightElement.value;
   const height = heightElement.value;
   const weeklyWorkouts = workoutButton.getAttribute("data-frequency");
+
+  if (
+    !username ||
+    !password ||
+    !firstName ||
+    !lastName ||
+    !birthdate ||
+    !gender ||
+    !weight ||
+    !height ||
+    !weeklyWorkouts
+  ) {
+    toastr.info("Please fill in all registration fields.");
+    return;
+  }
 
   const registerData = {
     username,
@@ -71,7 +71,7 @@ export function handleRegister(event) {
     })
     .then((data) => {
       if (data && data.jwtToken) {
-        toastr.success("You will be redirected shortly.", "Account created!");
+        toastr.success("You will be redirected shortly.", "Joined!");
         localStorage.setItem("jwtToken", data.jwtToken);
 
         setTimeout(() => {
@@ -133,7 +133,7 @@ export function handleLogout() {
   window.location.href = "/";
 }
 
-export function handleProfileFetch() {
+export async function handleProfileFetch() {
   const jwtToken = localStorage.getItem("jwtToken");
   const personId = getPersonIdFromCookie();
 
@@ -209,6 +209,21 @@ export function handleProfileUpdate(event) {
 
   const personId = getPersonIdFromCookie();
 
+  if (
+    !username ||
+    !password ||
+    !firstName ||
+    !lastName ||
+    !birthdate ||
+    !gender ||
+    !weight ||
+    !height ||
+    !weeklyWorkouts
+  ) {
+    toastr.info("Please fill in all profile fields.");
+    return;
+  }
+
   if (!personId) {
     return;
   }
@@ -275,11 +290,18 @@ export function handleProfileDelete(event) {
       if (!response.ok) {
         throw new Error("Failed to delete profile");
       }
-      localStorage.removeItem("jwtToken");
-      window.location.href = "/";
+
+      toastr.success("You will be redirected shortly.", "Deleted!");
+        localStorage.removeItem("jwtToken");
+        document.cookie = "userToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 3000);
     })
     .catch((error) => {
       console.error("Error deleting profile:", error);
+      toastr.error("Oops, something went wrong.", "Error!");
     });
 }
 

@@ -451,3 +451,36 @@ export function formatDatePicker() {
     }
   });
 }
+
+export function validateNumericInput() {
+  const weightInput = document.getElementById("weight");
+  const heightInput = document.getElementById("height");
+
+  function enforceValidInput(input) {
+    input.addEventListener("input", function () {
+      this.value = this.value.replace(/[^0-9.]/g, "");
+      if (this.value.split(".").length > 2) {
+        this.value = this.value.substring(0, this.value.length - 1);
+      }
+    });
+  }
+
+  function enforceValidRange(input, min, max) {
+    input.addEventListener("blur", function () {
+      if (this.value !== "") {
+        const value = parseFloat(this.value);
+        if (value < min) {
+          this.value = min;
+        } else if (value > max) {
+          this.value = max;
+        }
+      }
+    });
+  }
+
+  enforceValidInput(weightInput);
+  enforceValidInput(heightInput);
+
+  enforceValidRange(weightInput, 30, 200);
+  enforceValidRange(heightInput, 100, 250);
+}

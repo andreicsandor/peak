@@ -83,9 +83,9 @@ public class ImportRouteController {
         }
     }
 
-    @DeleteMapping("/delete-routes/person/{routeId}")
-    public ResponseEntity<?> deleteImportRoutesByPersonId(@PathVariable Long routeId) {
-        Boolean result = importRouteService.deleteImportRoutesByPersonId(routeId);
+    @DeleteMapping("/delete-routes/person/{personId}")
+    public ResponseEntity<?> deleteImportRoutesByPersonId(@PathVariable Long personId) {
+        Boolean result = importRouteService.deleteImportRoutesByPersonId(personId);
 
         if (result) {
             Map<String, String> response = new HashMap<>();

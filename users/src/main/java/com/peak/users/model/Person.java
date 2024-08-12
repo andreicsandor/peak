@@ -12,7 +12,7 @@ public class Person {
     @Column(name = "person_id")
     private Long id;
 
-    @Column(name = "username", nullable = false, length = 45)
+    @Column(name = "username", nullable = false, unique = true, length = 45)
     private String username;
 
     @Column(name = "password", nullable = false, length = 200)
