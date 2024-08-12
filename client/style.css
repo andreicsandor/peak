@@ -1395,7 +1395,7 @@ input[type="number"] {
   background-repeat: no-repeat;
   border: none;
   border-radius: 10px;
-  color: var(--secondary-color);
+  color: var(--primary-color);
   cursor: pointer;
   display: flex;
   font-weight: bold;
