@@ -1,5 +1,9 @@
 import toastr from "toastr";
-import { API_LOGIN_URL, API_USERS_URL, API_REGISTER_URL } from "../config/apiConfig"; 
+import {
+  API_LOGIN_URL,
+  API_USERS_URL,
+  API_REGISTER_URL,
+} from "../config/apiConfig";
 import { formatDatePicker } from "../utils/interfaceUtils";
 import { addAthleticismLabel } from "../components/createProfilePanel";
 
@@ -121,7 +125,10 @@ export function handleLogin(event) {
     })
     .catch((error) => {
       if (error.message === "Invalid credentials") {
-        toastr.info("Invalid username or password, try again.", "Wrong credentials");
+        toastr.info(
+          "Invalid username or password, try again.",
+          "Wrong credentials"
+        );
       } else {
         toastr.error("Oops, something went wrong.", "Error!");
       }
@@ -150,50 +157,53 @@ export async function handleProfileFetch() {
     return;
   }
 
-  fetch(`${API_USERS_URL}/get-persons?personId=${personId}`, {
-    method: "GET",
-    headers: {
-      ...getAuthHeader(),
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch profile data");
+  try {
+    const response = await fetch(
+      `${API_USERS_URL}/get-persons?personId=${personId}`,
+      {
+        method: "GET",
+        headers: {
+          ...getAuthHeader(),
+          "Content-Type": "application/json",
+        },
       }
-      return response.json();
-    })
-    .then((data) => {
-      const profile = data[0];
+    );
 
-      if (profile) {
-        document.getElementById("firstName").value = profile.firstName || "";
-        document.getElementById("lastName").value = profile.lastName || "";
-        document.getElementById("username").value = profile.username || "";
-        document.getElementById("password").value = "";
-        document.getElementById("birthdate").value = profile.birthdate || "";
-        document.getElementById("gender").value = profile.gender || "male";
-        document.getElementById("weight").value = profile.weight || "";
-        document.getElementById("height").value = profile.height || "";
+    if (!response.ok) {
+      throw new Error("Failed to fetch profile data");
+    }
 
-        const optionButtons = document.querySelectorAll(".option-button");
-        optionButtons.forEach((btn) => btn.classList.remove("active"));
+    const data = await response.json();
+    const profile = data[0];
 
-        const workoutButton = document.querySelector(
-          `.option-button[data-frequency="${profile.weeklyWorkouts}"]`
-        );
-        if (workoutButton) {
-          workoutButton.classList.add("active");
-        }
+    if (profile) {
+      document.getElementById("firstName").value = profile.firstName || "";
+      document.getElementById("lastName").value = profile.lastName || "";
+      document.getElementById("username").value = profile.username || "";
+      document.getElementById("password").value = "";
+      document.getElementById("birthdate").value = profile.birthdate || "";
+      document.getElementById("gender").value = profile.gender || "male";
+      document.getElementById("weight").value = profile.weight || "";
+      document.getElementById("height").value = profile.height || "";
 
-        addAthleticismLabel(profile.weeklyWorkouts);
-        formatDatePicker();
+      const optionButtons = document.querySelectorAll(".option-button");
+      optionButtons.forEach((btn) => btn.classList.remove("active"));
+
+      const workoutButton = document.querySelector(
+        `.option-button[data-frequency="${profile.weeklyWorkouts}"]`
+      );
+      if (workoutButton) {
+        workoutButton.classList.add("active");
       }
-    })
-    .catch((error) => {
-      console.error("Error fetching profile data:", error);
-      toastr.error("Oops, something went wrong.", "Error!");
-    });
+
+      addAthleticismLabel(profile.weeklyWorkouts);
+      formatDatePicker();
+    }
+  } catch (error) {
+    console.error("Error fetching profile data:", error);
+    toastr.error("Oops, something went wrong.", "Error!");
+    throw error; // Re-throw the error to be caught by the caller
+  }
 }
 
 export function handleProfileUpdate(event) {
@@ -300,12 +310,13 @@ export function handleProfileDelete(event) {
       }
 
       toastr.success("You will be redirected shortly.", "Deleted!");
-        localStorage.removeItem("jwtToken");
-        document.cookie = "userToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      localStorage.removeItem("jwtToken");
+      document.cookie =
+        "userToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 3000);
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 3000);
     })
     .catch((error) => {
       console.error("Error deleting profile:", error);

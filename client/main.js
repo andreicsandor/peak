@@ -585,8 +585,9 @@ export async function renderProfilePage() {
     setTimeout(() => {
       removeProfileLoader();
     }, 500);
+
   } catch (error) {
-    console.error("Failed to fetch profile data:", error);
+    return;
   }
 }
 
