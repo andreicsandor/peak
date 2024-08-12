@@ -95,7 +95,7 @@ function getRegisterPageTemplate() {
           <div class="athleticism-output"><span id="athleticism-level">Not Athletic</span></div>
         </div>
         <button class="control-button" id="register-button">Join</button>
-        <button class="control-button" id="login-button">I have an account</button>
+        <button class="control-button" id="redirect-button">I have an account</button>
       </div>
     </div>
   `;
@@ -106,17 +106,18 @@ function getLoginPageTemplate() {
     <div class="profile-section">
       <div class="profile-wrapper">
         <h1 style="margin-bottom: 2rem">Log In to Peak</h1>
-        <div class="input-group">
-          <label class="label-custom" for="username">Username</label>
-          <input type="text" id="username" class="input-custom input-wide" placeholder="Enter your username" required>
-        </div>
-        <div class="input-group">
-          <label class="label-custom" for="password">Password</label>
-          <input type="password" id="password" class="input-custom input-wide" placeholder="Enter your password" required>
-        </div>
-        <button class="control-button" id="login-button">Log In</button>
-        <button class="control-button" id="register-button">I don't have an account</button>
-      </div>
+        <form id="loginForm">
+          <div class="input-group">
+            <label class="label-custom" for="username">Username</label>
+            <input type="text" id="username" class="input-custom input-wide" placeholder="Enter username" required>
+          </div>
+          <div class="input-group">
+            <label class="label-custom" for="password">Password</label>
+            <input type="password" id="password" class="input-custom input-wide" placeholder="Enter password" required>
+          </div>
+          <button type="submit" class="control-button" id="login-button">Log In</button>
+        </form>
+        <button class="control-button" id="redirect-button">I don't have an account</button>
     </div>
   `;
 }
@@ -327,11 +328,11 @@ function setupRegisterForm() {
 }
 
 function setupRegisterRedirect() {
-  const registerButton = document.getElementById("register-button");
+  const registerButton = document.getElementById("redirect-button");
 
   registerButton.addEventListener("click", (event) => {
     event.preventDefault();
-    navigateTo("/");
+    navigateTo("/register");
   });
 }
 
@@ -343,11 +344,11 @@ function setupLoginForm() {
 }
 
 function setupLoginRedirect() {
-  const loginButton = document.getElementById("login-button");
+  const loginButton = document.getElementById("redirect-button");
 
   loginButton.addEventListener("click", (event) => {
     event.preventDefault();
-    navigateTo("/login");
+    navigateTo("/");
   });
 }
 
@@ -522,9 +523,9 @@ function renderContent(url) {
   mainContentDiv.innerHTML = "";
 
   if (url === "/") {
-    renderRegisterPage();
-  } else if (url === "/login") {
     renderLoginPage();
+  } else if (url === "/register") {
+    renderRegisterPage();
   } else if (url === "/activity") {
     renderActivityPage();
   } else if (url === "/run") {
