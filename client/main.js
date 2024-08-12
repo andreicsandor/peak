@@ -332,7 +332,7 @@ function setupRegisterRedirect() {
 
   registerButton.addEventListener("click", (event) => {
     event.preventDefault();
-    navigateTo("/register");
+    navigateTo("/join");
   });
 }
 
@@ -524,7 +524,7 @@ function renderContent(url) {
 
   if (url === "/") {
     renderLoginPage();
-  } else if (url === "/register") {
+  } else if (url === "/join") {
     renderRegisterPage();
   } else if (url === "/activity") {
     renderActivityPage();
