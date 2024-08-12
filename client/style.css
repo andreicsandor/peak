@@ -1313,7 +1313,7 @@ input[type="number"] {
 }
 
 /* Max width 1024px */
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1200px) {
   .map-message {
     display: flex;
     justify-content: center;
