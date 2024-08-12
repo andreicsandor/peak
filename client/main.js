@@ -27,7 +27,7 @@ import {
   setupDefaultValues,
   setupDeleteProfileEvent,
   setupOptionButtonEvents,
-} from "./src/components/createProfilePage.js";
+} from "./src/components/createProfileTemplate.js";
 
 // Navigate to a specific URL
 function navigateTo(url) {
