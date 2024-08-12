@@ -572,18 +572,20 @@ function handleOrientationChange() {
   const mapWrapper = document.querySelector(".map-wrapper");
   const mapMessage = document.querySelector(".map-message");
 
-  if (window.innerWidth > 768) {
-    menuWrapper.style.display = "flex";
-    mapWrapper.style.display = "block";
-    mapMessage.classList.add("hidden");
-  } else if (window.innerHeight > window.innerWidth) {
-    menuWrapper.style.display = "none";
-    mapWrapper.style.display = "none";
-    mapMessage.classList.remove("hidden");
-  } else {
-    menuWrapper.style.display = "flex";
-    mapWrapper.style.display = "block";
-    mapMessage.classList.add("hidden");
+  if (menuWrapper && mapMessage && mapMessage) {
+    if (window.innerWidth > 768) {
+      menuWrapper.style.display = "flex";
+      mapWrapper.style.display = "block";
+      mapMessage.classList.add("hidden");
+    } else if (window.innerHeight > window.innerWidth) {
+      menuWrapper.style.display = "none";
+      mapWrapper.style.display = "none";
+      mapMessage.classList.remove("hidden");
+    } else {
+      menuWrapper.style.display = "flex";
+      mapWrapper.style.display = "block";
+      mapMessage.classList.add("hidden");
+    }
   }
 }
 
