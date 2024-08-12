@@ -1095,7 +1095,7 @@ input[type="number"] {
 
 .profile-wrapper .athleticism-output {
   margin: var(--base-margin) 0;
-  font-size: smaller;
+  font-size: medium;
   color: var(--primary-color);
   text-align: center;
   font-weight: bold;

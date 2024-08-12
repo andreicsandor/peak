@@ -73,7 +73,18 @@ function getRegisterPageTemplate() {
           </div>
           <div class="input-group">
             <label class="label-custom" for="birthdate">Birthdate</label>
-            <input type="text" id="birthdate" class="input-custom input-wide" placeholder="Select birthdate" value="${defaultBirthdateString}" required>
+            <input 
+            type="text" 
+            id="birthdate" 
+            class="input-custom input-wide" 
+            placeholder="Select birthdate" 
+            value="${defaultBirthdateString}" 
+            required
+            onfocus="(this.type='date')" 
+            onblur="(this.type='text')" 
+            onclick="this.type='date'"
+            onkeydown="return false;"
+          >
           </div>
           <div class="input-group">
             <label class="label-custom" for="gender">Gender</label>
@@ -253,7 +264,20 @@ function getProfilePageTemplate() {
         </div>
         <div class="input-group">
           <label class="label-custom" for="birthdate">Birthdate</label>
-          <input type="text" id="birthdate" class="input-custom input-wide" placeholder="Select birthdate" value="${defaultBirthdateString}" required>
+          <div class="input-group">
+            <label class="label-custom" for="birthdate">Birthdate</label>
+            <input 
+            type="text" 
+            id="birthdate" 
+            class="input-custom input-wide" 
+            placeholder="Select birthdate" 
+            value="${defaultBirthdateString}" 
+            required
+            onfocus="(this.type='date')" 
+            onblur="(this.type='text')" 
+            onclick="this.type='date'"
+            onkeydown="return false;"
+          >
         </div>
          <div class="input-group">
           <label class="label-custom" for="gender">Gender</label>
