@@ -1,15 +1,15 @@
 import toastr from "toastr";
-import { importRoute } from "../api/importRoute.js";
-import { uploadImportRoute } from "../api/createRoutes.js";
-import { fetchKeys } from "../api/fetchMapKeys.js";
+import { importRoute } from "../api/routes/importRoute.js";
+import { uploadImportRoute } from "../api/routes/createRoutes.js";
+import { fetchKeys } from "../api/maps/fetchMapKeys.js";
 import { getUserLocation, setUserLocation } from "../const/userLocation.js";
 import {
   LocationPermission,
   setLocationPermission,
 } from "../const/locationPermission.js";
-import { saveRoute } from "../api/createRoutes.js";
-import { updateRoute } from "../api/updateRoute.js";
-import { fetchLocation } from "../api/fetchLocation.js";
+import { saveRoute } from "../api/routes/createRoutes.js";
+import { updateRoute } from "../api/routes/updateRoute.js";
+import { fetchLocation } from "../api/maps/fetchLocation.js";
 import { getDistanceBetweenCoordinates } from "./mathUtils.js";
 import { globalManager } from "../managers/globalManager.js";
 import {
@@ -28,7 +28,7 @@ import {
 } from "../utils/interfaceUtils.js";
 import { RouteMetrics } from "../dto/routeMetricsDTO.js";
 import { MarkerManager } from "../managers/markerManager.js";
-import { deleteImportRoute, deleteRoute } from "../api/deleteRoutes.js";
+import { deleteImportRoute, deleteRoute } from "../api/routes/deleteRoutes.js";
 import { toastrOptions } from "../config/toastrConfig";
 import {
   setFetchedCoordinates,
@@ -40,7 +40,7 @@ import {
 } from "./heatMapUtils.js";
 import { addSimilarityScore } from "../components/createSimilarityScore.js";
 import { WeatherMetrics } from "../dto/weatherMetricsDTO.js";
-import { fetchTips } from "../api/fetchTips.js";
+import { fetchTips } from "../api/assistant/fetchTips.js";
 import { Route } from "../dto/routeDTO.js";
 import { addAssistantOverlay } from "../components/createAssistantControls.js";
 import { getPersonIdFromCookie } from "./profileUtils.js";

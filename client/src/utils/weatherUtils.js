@@ -1,4 +1,4 @@
-import { fetchWeather } from "../api/fetchWeather.js";
+import { fetchWeather } from "../api/weather/fetchWeather.js";
 import { globalManager } from "../managers/globalManager.js";
 import { getCurrentDateTime } from "./datetimeUtils.js";
 import { toCamelCase } from "./interfaceUtils.js";

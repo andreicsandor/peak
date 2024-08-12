@@ -1,5 +1,5 @@
-import { API_MAPS_URL } from "../config/apiConfig";
-import { getAuthHeader } from "../utils/profileUtils";
+import { API_MAPS_URL } from "../../config/apiConfig";
+import { getAuthHeader } from "../../utils/profileUtils";
 
 export async function fetchDirections(coordinates, radiuses) {
   let directionURL = `${API_MAPS_URL}/get-directions?coordinates=${coordinates}`;

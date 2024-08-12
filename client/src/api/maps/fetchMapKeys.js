@@ -1,5 +1,5 @@
-import { API_MAPS_URL } from "../config/apiConfig";
-import { getAuthHeader } from "../utils/profileUtils";
+import { API_MAPS_URL } from "../../config/apiConfig";
+import { getAuthHeader } from "../../utils/profileUtils";
 
 export async function fetchKeys() {
   const mapUrl = `${API_MAPS_URL}/get-map`;

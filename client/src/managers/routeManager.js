@@ -1,5 +1,5 @@
 import toastr from "toastr";
-import { fetchDirections } from "../api/fetchDirections";
+import { fetchDirections } from "../api/maps/fetchDirections";
 import { toastrOptions } from "../config/toastrConfig"; 
 
 toastr.options = toastrOptions;

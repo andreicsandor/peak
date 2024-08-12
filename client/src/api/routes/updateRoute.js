@@ -1,8 +1,8 @@
-import { API_ROUTES_URL } from "../config/apiConfig";
-import { Route } from "../dto/routeDTO";
-import { RouteMetrics } from "../dto/routeMetricsDTO";
-import { WeatherMetrics } from "../dto/weatherMetricsDTO";
-import { getAuthHeader } from "../utils/profileUtils";
+import { API_ROUTES_URL } from "../../config/apiConfig";
+import { Route } from "../../dto/routeDTO";
+import { RouteMetrics } from "../../dto/routeMetricsDTO";
+import { WeatherMetrics } from "../../dto/weatherMetricsDTO";
+import { getAuthHeader } from "../../utils/profileUtils";
 
 export async function updateRoute(
   id,

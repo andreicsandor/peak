@@ -1,5 +1,5 @@
 import { Modes, getCurrentMode } from "../const/currentModes.js";
-import { fetchDirections } from "../api/fetchDirections.js";
+import { fetchDirections } from "../api/maps/fetchDirections.js";
 
 export class MarkerManager {
   static NORMAL_COLOR = "#FF5733";

@@ -1,6 +1,6 @@
 import toastr from "toastr";
 import { addPanelLoader, addRoutesLoader, removePanelLoader, removeRoutesLoader } from "./createLoader";
-import { fetchRoute, fetchImportRoutes } from "../api/fetchRoutes";
+import { fetchRoute, fetchImportRoutes } from "../api/routes/fetchRoutes";
 import { createRoutePanel, resetRoutePanel } from "./createRoutePanel";
 import { createWeatherSummary } from "./createWeatherSummary";
 import { formatDistance, formatElevation, formatPace, formatTime } from "../utils/interfaceUtils";

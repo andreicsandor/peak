@@ -1,5 +1,5 @@
 import toastr from "toastr";
-import { fetchKeys } from "../api/fetchMapKeys.js";
+import { fetchKeys } from "../api/maps/fetchMapKeys.js";
 import { globalManager } from "../managers/globalManager.js";
 import {
   activateMapControls,
@@ -13,7 +13,7 @@ import { formatPace } from "../utils/interfaceUtils.js";
 import { addPaceSelector } from "./createPaceSelector.js";
 import { addSimilarityScore } from "./createSimilarityScore.js";
 import { addWeatherWidget } from "./createWeatherControls.js";
-import { fetchRoute, fetchImportRoutes } from "../api/fetchRoutes.js";
+import { fetchRoute, fetchImportRoutes } from "../api/routes/fetchRoutes.js";
 import { Modes, setCurrentMode } from "../const/currentModes.js";
 import { createRemoveButton } from "./createMapControls.js";
 import { toastrOptions } from "../config/toastrConfig.js";

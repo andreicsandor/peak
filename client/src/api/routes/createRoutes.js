@@ -1,9 +1,9 @@
-import { Route } from "../dto/routeDTO";
-import { ImportRoute } from "../dto/importRouteDTO";
-import { RouteMetrics } from "../dto/routeMetricsDTO";
-import { WeatherMetrics } from "../dto/weatherMetricsDTO";
-import { getAuthHeader } from "../utils/profileUtils";
-import { API_ROUTES_URL } from "../config/apiConfig";
+import { Route } from "../../dto/routeDTO";
+import { ImportRoute } from "../../dto/importRouteDTO";
+import { RouteMetrics } from "../../dto/routeMetricsDTO";
+import { WeatherMetrics } from "../../dto/weatherMetricsDTO";
+import { getAuthHeader } from "../../utils/profileUtils";
+import { API_ROUTES_URL } from "../../config/apiConfig";
 
 export async function saveRoute(
   waypoints,

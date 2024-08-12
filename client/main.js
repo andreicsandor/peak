@@ -14,14 +14,14 @@ import {
 } from "./src/components/createMapControls";
 import { addEmptyMap, addFetchedMap } from "./src/components/createMap.js";
 import { addPaceSelector } from "./src/components/createPaceSelector.js";
-import { fetchRoutes } from "./src/api/fetchRoutes.js";
+import { fetchRoutes } from "./src/api/routes/fetchRoutes.js";
 import { addRouteCards } from "./src/utils/interfaceUtils.js";
 import { resetRoutePanel } from "./src/components/createRoutePanel.js";
 import { addLocationSearchBar } from "./src/components/createSearchControls.js";
 import { addLocationButton } from "./src/components/createSearchControls.js";
 import { addWeatherWidget } from "./src/components/createWeatherControls.js";
 import { getCookie, getPersonIdFromCookie } from "./src/utils/profileUtils.js";
-import { checkOwnership } from "./src/api/checkOwnership.js";
+import { checkOwnership } from "./src/api/routes/checkOwnership.js";
 import { setupOptionButtonEvents } from "./src/components/createProfilePanel.js";
 import {
   handleLogin,

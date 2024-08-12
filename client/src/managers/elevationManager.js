@@ -1,5 +1,5 @@
 import polyline from "@mapbox/polyline";
-import { fetchElevationForPath } from "../api/fetchMetrics";
+import { fetchElevationForPath } from "../api/maps/fetchMetrics";
 
 export class ElevationManager {
   static COORDINATES_LIMIT = 512;

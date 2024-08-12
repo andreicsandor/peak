@@ -1,6 +1,6 @@
-import { API_MAPS_URL } from "../config/apiConfig";
-import { ImportRoute } from "../dto/importRouteDTO";
-import { getAuthHeader } from "../utils/profileUtils";
+import { API_MAPS_URL } from "../../config/apiConfig";
+import { ImportRoute } from "../../dto/importRouteDTO";
+import { getAuthHeader } from "../../utils/profileUtils";
 
 export async function importRoute(file, routeId, personId) {
   const formData = new FormData();

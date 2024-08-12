@@ -6,8 +6,12 @@ import {
 } from "../config/apiConfig";
 import { formatDatePicker } from "./interfaceUtils";
 import { addAthleticismLabel } from "../components/createProfilePanel";
+import { registerUser } from "../api/auth/registerUser";
+import { loginUser } from "../api/auth/loginUser";
+import { fetchUser } from "../api/users/fetchUser";
+import { updateUser } from "../api/users/updateUser";
 
-export function handleRegister(event) {
+export async function handleRegister(event) {
   event.preventDefault();
 
   const usernameElement = document.getElementById("username");
@@ -60,80 +64,51 @@ export function handleRegister(event) {
     weeklyWorkouts: parseInt(weeklyWorkouts),
   };
 
-  fetch(`${API_REGISTER_URL}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(registerData),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Registration failed");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data && data.jwtToken) {
-        toastr.success("You will be redirected shortly.", "Joined!");
-        localStorage.setItem("jwtToken", data.jwtToken);
+  try {
+    const data = await registerUser(registerData);
 
-        setTimeout(() => {
-          window.location.href = "/run";
-        }, 3000);
-      } else {
-        throw new Error("User data not found");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      toastr.error("Oops, something went wrong.", "Error!");
-    });
+    if (data && data.jwtToken) {
+      toastr.success("You will be redirected shortly.", "Joined!");
+      localStorage.setItem("jwtToken", data.jwtToken);
+
+      setTimeout(() => {
+        window.location.href = "/run";
+      }, 3000);
+    } else {
+      throw new Error("User data not found");
+    }
+  } catch (error) {
+    toastr.error("Oops, something went wrong.", "Error!");
+  }
 }
 
-export function handleLogin(event) {
+export async function handleLogin(event) {
   event.preventDefault();
+
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
   const loginData = { username, password };
 
-  fetch(`${API_LOGIN_URL}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(loginData),
-    credentials: "include",
-  })
-    .then((response) => {
-      if (response.status === 401) {
-        throw new Error("Invalid credentials");
-      }
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data && data.jwtToken) {
-        localStorage.setItem("jwtToken", data.jwtToken);
-        window.location.href = "/run";
-      } else {
-        throw new Error("User data not found");
-      }
-    })
-    .catch((error) => {
-      if (error.message === "Invalid credentials") {
-        toastr.info(
-          "Invalid username or password, try again.",
-          "Wrong credentials"
-        );
-      } else {
-        toastr.error("Oops, something went wrong.", "Error!");
-      }
-      console.error("Error:", error);
-    });
+  try {
+    const data = await loginUser(loginData);
+
+    if (data && data.jwtToken) {
+      localStorage.setItem("jwtToken", data.jwtToken);
+      window.location.href = "/run";
+    } else {
+      throw new Error("User data not found");
+    }
+  } catch (error) {
+    if (error.message === "Invalid credentials") {
+      toastr.info(
+        "Invalid username or password, try again.",
+        "Wrong credentials"
+      );
+    } else {
+      toastr.error("Oops, something went wrong.", "Error!");
+    }
+  }
 }
 
 export function handleLogout() {
@@ -149,31 +124,15 @@ export function handleLogout() {
 }
 
 export async function handleProfileFetch() {
-  const jwtToken = localStorage.getItem("jwtToken");
   const personId = getPersonIdFromCookie();
 
-  if (!jwtToken || !personId) {
+  if (!personId) {
     window.location.href = "/";
     return;
   }
 
   try {
-    const response = await fetch(
-      `${API_USERS_URL}/get-persons?personId=${personId}`,
-      {
-        method: "GET",
-        headers: {
-          ...getAuthHeader(),
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch profile data");
-    }
-
-    const data = await response.json();
+    const data = await fetchUser(personId);
     const profile = data[0];
 
     if (profile) {
@@ -200,13 +159,11 @@ export async function handleProfileFetch() {
       formatDatePicker();
     }
   } catch (error) {
-    console.error("Error fetching profile data:", error);
     toastr.error("Oops, something went wrong.", "Error!");
-    throw error; // Re-throw the error to be caught by the caller
   }
 }
 
-export function handleProfileUpdate(event) {
+export async function handleProfileUpdate(event) {
   event.preventDefault();
 
   const firstName = document.getElementById("firstName").value;
@@ -259,30 +216,15 @@ export function handleProfileUpdate(event) {
     weeklyWorkouts,
   };
 
-  fetch(`${API_USERS_URL}/update-person`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      ...getAuthHeader(),
-    },
-    body: JSON.stringify(profileData),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to update profile");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      toastr.success("Profile updated successfully.");
-    })
-    .catch((error) => {
-      console.error("Error updating profile:", error);
-      toastr.error("Oops, something went wrong.", "Error!");
-    });
+  try {
+    await updateUser(profileData);
+    toastr.success("Profile updated successfully.");
+  } catch (error) {
+    toastr.error("Oops, something went wrong.", "Error!");
+  }
 }
 
-export function handleProfileDelete(event) {
+export async function handleProfileDelete(event) {
   event.preventDefault();
 
   const confirmed = confirm(
@@ -290,38 +232,25 @@ export function handleProfileDelete(event) {
   );
   if (!confirmed) return;
 
-  const jwtToken = localStorage.getItem("jwtToken");
   const personId = getPersonIdFromCookie();
 
-  if (!jwtToken || !personId) {
+  if (!personId) {
     return;
   }
 
-  fetch(`${API_USERS_URL}/delete-person/${personId}`, {
-    method: "DELETE",
-    headers: {
-      ...getAuthHeader(),
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to delete profile");
-      }
+  try {
+    await deleteProfile(personId);
+    toastr.success("You will be redirected shortly.", "Deleted!");
+    localStorage.removeItem("jwtToken");
+    document.cookie =
+      "userToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-      toastr.success("You will be redirected shortly.", "Deleted!");
-      localStorage.removeItem("jwtToken");
-      document.cookie =
-        "userToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 3000);
-    })
-    .catch((error) => {
-      console.error("Error deleting profile:", error);
-      toastr.error("Oops, something went wrong.", "Error!");
-    });
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 3000);
+  } catch (error) {
+    toastr.error("Oops, something went wrong.", "Error!");
+  }
 }
 
 // Extra authentication-related utils

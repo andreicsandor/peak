@@ -1,5 +1,5 @@
-import { fetchSuggestions } from "../api/fetchSearchSuggestions.js";
-import { fetchKeys } from "../api/fetchMapKeys.js";
+import { fetchSuggestions } from "../api/maps/fetchSearchSuggestions.js";
+import { fetchKeys } from "../api/maps/fetchMapKeys.js";
 import { handleSearchLocation } from "../utils/mapUtils.js";
 import { handleGetLocation } from "../utils/mapUtils.js";
 
