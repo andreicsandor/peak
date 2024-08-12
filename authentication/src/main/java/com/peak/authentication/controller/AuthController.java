@@ -39,7 +39,6 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody NewPersonDTO newPersonDTO, HttpServletResponse response) {
         try {
-            // Create the user by calling the users microservice
             HttpEntity<NewPersonDTO> request = new HttpEntity<>(newPersonDTO);
             ResponseEntity<PersonDTO> personResponse = restTemplate.exchange(
                     "http://localhost:8080/api/users/create-person",

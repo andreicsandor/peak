@@ -103,6 +103,9 @@ export function handleLogin(event) {
     credentials: "include",
   })
     .then((response) => {
+      if (response.status === 401) {
+        throw new Error("Invalid credentials");
+      }
       if (!response.ok) {
         throw new Error("Login failed");
       }
@@ -117,6 +120,11 @@ export function handleLogin(event) {
       }
     })
     .catch((error) => {
+      if (error.message === "Invalid credentials") {
+        toastr.info("Invalid username or password, try again.", "Wrong credentials");
+      } else {
+        toastr.error("Oops, something went wrong.", "Error!");
+      }
       console.error("Error:", error);
     });
 }
