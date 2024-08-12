@@ -1111,6 +1111,10 @@ input[type="number"] {
   width: 100%;
 }
 
+.profile-wrapper .control-button:last-child {
+  margin-top: 0;
+}
+
 .profile-wrapper .delete-button {
   background-color: var(--hover-light);
   color: var(--danger);
@@ -1118,6 +1122,15 @@ input[type="number"] {
   margin: auto;
   padding: 0.5rem;
   width: 100%;
+}
+
+#register-button {
+  color: white;
+  background-color: var(--background-medium);
+}
+
+#register-button:hover {
+  background-color: var(--background-dark);
 }
 
 /* Input Styles */

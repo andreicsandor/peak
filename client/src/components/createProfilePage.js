@@ -88,7 +88,7 @@ export function setupDatePicker() {
 }
 
 export function setupDeleteProfileEvent() {
-  const deleteButton = document.getElementById("delete-profile");
+  const deleteButton = document.getElementById("delete-button");
 
   deleteButton.addEventListener("click", () => {
     const confirmed = confirm(
@@ -101,9 +101,18 @@ export function setupDeleteProfileEvent() {
 }
 
 export function setupUpdateProfileEvent() {
-  const updateButton = document.getElementById("update-profile");
+  const updateButton = document.getElementById("update-button");
 
   updateButton.addEventListener("click", () => {
     // TO DO
+  });
+}
+
+export function setupLoginProfileEvent() {
+  const loginButton = document.getElementById("login-button");
+
+  loginButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    navigateTo("/login");
   });
 }

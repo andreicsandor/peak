@@ -14,12 +14,7 @@ import {
 import { addEmptyMap, addFetchedMap } from "./src/components/createMap.js";
 import { addPaceSelector } from "./src/components/createPaceSelector.js";
 import { fetchRoutes } from "./src/api/fetchRoutes.js";
-import {
-  addRouteCards,
-  deactivateDashboardControls,
-  deactivateMapControls,
-  hideDashboard,
-} from "./src/utils/interfaceUtils.js";
+import { addRouteCards } from "./src/utils/interfaceUtils.js";
 import { resetRoutePanel } from "./src/components/createRoutePanel.js";
 import { addLocationSearchBar } from "./src/components/createSearchControls.js";
 import { addLocationButton } from "./src/components/createSearchControls.js";
@@ -41,27 +36,86 @@ function navigateTo(url) {
 }
 
 // HTML templates
-function getHomePageTemplate() {
+function getRegisterPageTemplate() {
+  const defaultBirthdate = new Date();
+  defaultBirthdate.setFullYear(defaultBirthdate.getFullYear() - 18);
+
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const defaultBirthdateString = defaultBirthdate.toLocaleDateString(
+    "en-US",
+    options
+  );
+
   return `
-    <div id="content" class="login-section">
-      <div class="edit-card" style="width: 100%; max-width: 400px;">
-        <div class="card-body">
-          <div class="content" style="display: flex; flex-direction: column; align-items: center;">
-            <form id="loginForm" style="width: 100%;">
-              <div class="input-group" style="margin-bottom:1rem;">
-                <label class="label-custom" for="username">Username</label>
-                <input type="text" id="username" class="input-custom input-wide" placeholder="Enter your username" required>
-              </div>
-              <div class="input-group" style="margin-bottom: 2rem">
-                <label class="label-custom" for="password">Password</label>
-                <input type="password" id="password" class="input-custom input-wide" placeholder="Enter your password" required>
-              </div>
-              <div style="width: 100%; display: flex; justify-content: center;">
-                <button type="submit" class="control-button">Log In</button>
-              </div>
-            </form>
+    <div class="profile-section">
+      <div class="profile-wrapper">
+        <h1 style="margin-bottom: 2rem">Join Peak</h1>
+        <div class="input-group">
+          <label class="label-custom" for="firstName">First Name</label>
+          <input type="text" id="firstName" class="input-custom input-wide" placeholder="Enter first name" required>
+        </div>
+        <div class="input-group">
+          <label class="label-custom" for="lastName">Last Name</label>
+          <input type="text" id="lastName" class="input-custom input-wide" placeholder="Enter last name" required>
+        </div>
+        <div class="input-group">
+          <label class="label-custom" for="username">Username</label>
+          <input type="text" id="username" class="input-custom input-wide" placeholder="Enter username" required>
+        </div>
+        <div class="input-group">
+          <label class="label-custom" for="birthdate">Birthdate</label>
+          <input type="text" id="birthdate" class="input-custom input-wide" placeholder="Select birthdate" value="${defaultBirthdateString}" required>
+        </div>
+         <div class="input-group">
+          <label class="label-custom" for="gender">Gender</label>
+          <select id="gender" class="gender-dropdown" required>
+            <option value="male" selected>Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="input-group-horizontal">
+          <div class="input-group-half">
+            <label class="label-custom" for="weight">Weight kg.</label>
+            <input type="number" id="weight" class="input-custom input-half" placeholder="Enter weight" required>
+          </div>
+          <div class="input-group-half">
+            <label class="label-custom" for="height">Height cm.</label>
+            <input type="number" id="height" class="input-custom input-half" placeholder="Enter height" required>
           </div>
         </div>
+        <div class="input-group">
+          <label class="label-custom" for="workouts">Weekly Workouts</label>
+          <div class="option-buttons" required>
+            <button class="option-button" data-frequency="0">Never</button>
+            <button class="option-button" data-frequency="1">Once</button>
+            <button class="option-button" data-frequency="2">Twice</button>
+            <button class="option-button" data-frequency="3">Thrice</button>
+            <button class="option-button" data-frequency="4">More</button>
+          </div>
+          <div class="athleticism-output"><span id="athleticism-level">Not Athletic</span></div>
+        </div>
+        <button class="control-button" id="register-button">Join</button>
+        <button class="control-button" id="login-button">I have an account</button>
+      </div>
+    </div>
+  `;
+}
+
+function getLoginPageTemplate() {
+  return `
+    <div class="profile-section">
+      <div class="profile-wrapper">
+        <h1 style="margin-bottom: 2rem">Log In to Peak</h1>
+        <div class="input-group">
+          <label class="label-custom" for="username">Username</label>
+          <input type="text" id="username" class="input-custom input-wide" placeholder="Enter your username" required>
+        </div>
+        <div class="input-group">
+          <label class="label-custom" for="password">Password</label>
+          <input type="password" id="password" class="input-custom input-wide" placeholder="Enter your password" required>
+        </div>
+        <button class="control-button" id="login-button">Log In</button>
+        <button class="control-button" id="register-button">I don't have an account</button>
       </div>
     </div>
   `;
@@ -218,8 +272,8 @@ function getProfilePageTemplate() {
           </div>
           <div class="athleticism-output"><span id="athleticism-level">Not Athletic</span></div>
         </div>
-        <button class="control-button" id="delete-profile">Save Changes</button>
-        <button class="delete-button" id="delete-profile">Delete Profile</button>
+        <button class="control-button" id="update-button">Save Changes</button>
+        <button class="delete-button" id="delete-button">Delete Profile</button>
       </div>
     </div>
   `;
@@ -265,6 +319,22 @@ function setupInitialPage() {
   renderContent(initialUrl);
 }
 
+function setupRegisterForm() {
+  const registerForm = document.getElementById("registerForm");
+  if (registerForm) {
+    // registerForm.addEventListener("submit", handleRegister);
+  }
+}
+
+function setupRegisterRedirect() {
+  const registerButton = document.getElementById("register-button");
+
+  registerButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    navigateTo("/");
+  });
+}
+
 function setupLoginForm() {
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
@@ -272,12 +342,21 @@ function setupLoginForm() {
   }
 }
 
+function setupLoginRedirect() {
+  const loginButton = document.getElementById("login-button");
+
+  loginButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    navigateTo("/login");
+  });
+}
+
 function setupLogoutForm() {
   handleLogout();
 }
 
 // Render content logic
-function renderHomePage() {
+function renderRegisterPage() {
   const loggedInUser = getCookie("userToken");
 
   if (loggedInUser) {
@@ -286,9 +365,28 @@ function renderHomePage() {
   }
 
   const mainContentDiv = document.querySelector(".main-content-component");
-  mainContentDiv.innerHTML = getHomePageTemplate();
+  mainContentDiv.innerHTML = getRegisterPageTemplate();
+
+  setupOptionButtonEvents();
+  setupDatePicker();
+  setupDefaultValues();
+  setupRegisterForm();
+  setupLoginRedirect();
+}
+
+function renderLoginPage() {
+  const loggedInUser = getCookie("userToken");
+
+  if (loggedInUser) {
+    window.location.href = "/run";
+    return;
+  }
+
+  const mainContentDiv = document.querySelector(".main-content-component");
+  mainContentDiv.innerHTML = getLoginPageTemplate();
 
   setupLoginForm();
+  setupRegisterRedirect();
 }
 
 function renderExitPage() {
@@ -394,7 +492,6 @@ export async function renderEditPage() {
     handleOrientationChange();
     addMapLoader();
     addFetchedMap(routeId);
-
   } catch (error) {
     console.error("Error during route editing:", error);
     toastr.error("Oops, something went wrong.", "Error!");
@@ -425,7 +522,9 @@ function renderContent(url) {
   mainContentDiv.innerHTML = "";
 
   if (url === "/") {
-    renderHomePage();
+    renderRegisterPage();
+  } else if (url === "/login") {
+    renderLoginPage();
   } else if (url === "/activity") {
     renderActivityPage();
   } else if (url === "/run") {
