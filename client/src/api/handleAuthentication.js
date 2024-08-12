@@ -67,10 +67,9 @@ export function handleRegister(event) {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       if (data && data.jwtToken) {
         localStorage.setItem("jwtToken", data.jwtToken);
-        
+
         setTimeout(() => {
           window.location.href = "/run";
         }, 3000); //
