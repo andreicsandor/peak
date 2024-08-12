@@ -1681,3 +1681,17 @@ input[type="number"] {
     font-size: var(--h4-font-size);
   }
 }
+
+/* Max width 500px */
+@media only screen and (max-width: 500px) {
+  .option-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+  }
+
+  .option-button {
+    width: 100%;
+    text-align: center;
+  }
+}

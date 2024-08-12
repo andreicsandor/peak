@@ -199,11 +199,11 @@ function getProfilePageTemplate() {
         </div>
         <div class="input-group-horizontal">
           <div class="input-group-half">
-            <label class="label-custom" for="weight">Weight in kg.</label>
+            <label class="label-custom" for="weight">Weight kg.</label>
             <input type="number" id="weight" class="input-custom input-half" placeholder="Enter weight" required>
           </div>
           <div class="input-group-half">
-            <label class="label-custom" for="height">Height in cm.</label>
+            <label class="label-custom" for="height">Height cm.</label>
             <input type="number" id="height" class="input-custom input-half" placeholder="Enter height" required>
           </div>
         </div>
