@@ -32,28 +32,19 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonDTO createPerson(NewPersonDTO newPersonDTO) {
-        String username = newPersonDTO.getUsername();
-        String password = newPersonDTO.getPassword();
-
-        Person person = new Person();
-        person.setUsername(username);
-        person.setPassword(password);
-
+        Person person = personMapper.convertNewPersonDTOToEntity(newPersonDTO);
         person = personDAO.save(person);
 
         if(person == null) {
             return null;
         }
 
-        PersonDTO personDTO = personMapper.convertDTO(person);
-        return personDTO;
+        return personMapper.convertDTO(person);
     }
 
     @Override
     public Boolean updatePerson(PersonPatchDTO personPatchDTO) {
         Long personId = Long.valueOf(personPatchDTO.getId());
-        String username = personPatchDTO.getUsername();
-        String password = personPatchDTO.getPassword();
 
         Optional<Person> personEntity = personDAO.findById(personId);
 
@@ -62,8 +53,15 @@ public class PersonServiceImpl implements PersonService {
         }
 
         Person person = personEntity.get();
-        person.setUsername(username);
-        person.setPassword(password);
+        person.setUsername(personPatchDTO.getUsername());
+        person.setPassword(personPatchDTO.getPassword());
+        person.setFirstName(personPatchDTO.getFirstName());
+        person.setLastName(personPatchDTO.getLastName());
+        person.setBirthdate(personPatchDTO.getBirthdate());
+        person.setGender(personPatchDTO.getGender());
+        person.setWeight(personPatchDTO.getWeight());
+        person.setHeight(personPatchDTO.getHeight());
+        person.setWeeklyWorkouts(personPatchDTO.getWeeklyWorkouts());
 
         personDAO.save(person);
 

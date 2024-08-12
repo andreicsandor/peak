@@ -21,6 +21,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      '/register': {
+        target: API_AUTH_URL,
+        changeOrigin: true,
+        secure: false,
+      },
       '/auth': {
         target: API_AUTH_URL,
         changeOrigin: true,

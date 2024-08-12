@@ -50,6 +50,8 @@ public class PersonController {
     public ResponseEntity<?> createPerson(@RequestBody NewPersonDTO newPersonDTO) {
         PersonDTO personDTO = personService.createPerson(newPersonDTO);
 
+        System.out.println(personDTO);
+
         if (personDTO != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(personDTO);
         } else {

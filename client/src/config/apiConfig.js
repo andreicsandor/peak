@@ -1,4 +1,5 @@
 export const API_LOGIN_URL = '/login';
+export const API_REGISTER_URL = '/register';
 export const API_USERS_URL = '/auth/users';
 export const API_ROUTES_URL = '/auth/routes';
 export const API_MAPS_URL = '/auth/maps';

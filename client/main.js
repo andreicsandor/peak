@@ -20,7 +20,11 @@ import { addLocationSearchBar } from "./src/components/createSearchControls.js";
 import { addLocationButton } from "./src/components/createSearchControls.js";
 import { addWeatherWidget } from "./src/components/createWeatherControls.js";
 import { getCookie, getPersonIdFromCookie } from "./src/utils/authUtils.js";
-import { handleLogin, handleLogout } from "./src/api/handleAuthentication.js";
+import {
+  handleLogin,
+  handleLogout,
+  handleRegister,
+} from "./src/api/handleAuthentication.js";
 import { checkOwnership } from "./src/api/checkOwnership.js";
 import {
   setupDatePicker,
@@ -50,51 +54,57 @@ function getRegisterPageTemplate() {
     <div class="profile-section">
       <div class="profile-wrapper">
         <h1 style="margin-bottom: 2rem">Join Peak</h1>
-        <div class="input-group">
-          <label class="label-custom" for="firstName">First Name</label>
-          <input type="text" id="firstName" class="input-custom input-wide" placeholder="Enter first name" required>
-        </div>
-        <div class="input-group">
-          <label class="label-custom" for="lastName">Last Name</label>
-          <input type="text" id="lastName" class="input-custom input-wide" placeholder="Enter last name" required>
-        </div>
-        <div class="input-group">
-          <label class="label-custom" for="username">Username</label>
-          <input type="text" id="username" class="input-custom input-wide" placeholder="Enter username" required>
-        </div>
-        <div class="input-group">
-          <label class="label-custom" for="birthdate">Birthdate</label>
-          <input type="text" id="birthdate" class="input-custom input-wide" placeholder="Select birthdate" value="${defaultBirthdateString}" required>
-        </div>
-         <div class="input-group">
-          <label class="label-custom" for="gender">Gender</label>
-          <select id="gender" class="gender-dropdown" required>
-            <option value="male" selected>Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
-        <div class="input-group-horizontal">
-          <div class="input-group-half">
-            <label class="label-custom" for="weight">Weight kg.</label>
-            <input type="number" id="weight" class="input-custom input-half" placeholder="Enter weight" required>
+        <form id="registerForm">
+          <div class="input-group">
+            <label class="label-custom" for="firstName">First Name</label>
+            <input type="text" id="firstName" class="input-custom input-wide" placeholder="Enter first name" required>
           </div>
-          <div class="input-group-half">
-            <label class="label-custom" for="height">Height cm.</label>
-            <input type="number" id="height" class="input-custom input-half" placeholder="Enter height" required>
+          <div class="input-group">
+            <label class="label-custom" for="lastName">Last Name</label>
+            <input type="text" id="lastName" class="input-custom input-wide" placeholder="Enter last name" required>
           </div>
-        </div>
-        <div class="input-group">
-          <label class="label-custom" for="workouts">Weekly Workouts</label>
-          <div class="option-buttons" required>
-            <button class="option-button" data-frequency="0">Never</button>
-            <button class="option-button" data-frequency="1">Once</button>
-            <button class="option-button" data-frequency="2">Twice</button>
-            <button class="option-button" data-frequency="3">Thrice</button>
-            <button class="option-button" data-frequency="4">More</button>
+          <div class="input-group">
+            <label class="label-custom" for="username">Username</label>
+            <input type="text" id="username" class="input-custom input-wide" placeholder="Enter username" required>
           </div>
-          <div class="athleticism-output"><span id="athleticism-level">Not Athletic</span></div>
-        </div>
-        <button class="control-button" id="register-button">Join</button>
+          <div class="input-group">
+            <label class="label-custom" for="password">Password</label>
+            <input type="password" id="password" class="input-custom input-wide" placeholder="Enter password" required>
+          </div>
+          <div class="input-group">
+            <label class="label-custom" for="birthdate">Birthdate</label>
+            <input type="text" id="birthdate" class="input-custom input-wide" placeholder="Select birthdate" value="${defaultBirthdateString}" required>
+          </div>
+          <div class="input-group">
+            <label class="label-custom" for="gender">Gender</label>
+            <select id="gender" class="gender-dropdown" required>
+              <option value="male" selected>Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div class="input-group-horizontal">
+            <div class="input-group-half">
+              <label class="label-custom" for="weight">Weight kg.</label>
+              <input type="number" id="weight" class="input-custom input-half" placeholder="Enter weight" required>
+            </div>
+            <div class="input-group-half">
+              <label class="label-custom" for="height">Height cm.</label>
+              <input type="number" id="height" class="input-custom input-half" placeholder="Enter height" required>
+            </div>
+          </div>
+          <div class="input-group">
+            <label class="label-custom" for="workouts">Weekly Workouts</label>
+            <div class="option-buttons" required>
+              <button type="button" class="option-button" data-frequency="0">Never</button>
+              <button type="button" class="option-button" data-frequency="1">Once</button>
+              <button type="button" class="option-button" data-frequency="2">Twice</button>
+              <button type="button" class="option-button" data-frequency="3">Thrice</button>
+              <button type="button" class="option-button" data-frequency="4">More</button>
+            </div>
+            <div class="athleticism-output"><span id="athleticism-level">Not Athletic</span></div>
+          </div>
+          <button type="submit" class="control-button" id="register-button">Join</button>
+        </form>
         <button class="control-button" id="redirect-button">I have an account</button>
       </div>
     </div>
@@ -323,7 +333,7 @@ function setupInitialPage() {
 function setupRegisterForm() {
   const registerForm = document.getElementById("registerForm");
   if (registerForm) {
-    // registerForm.addEventListener("submit", handleRegister);
+    registerForm.addEventListener("submit", handleRegister);
   }
 }
 
