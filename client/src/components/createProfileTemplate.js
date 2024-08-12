@@ -88,7 +88,7 @@ export function setupDatePicker() {
 }
 
 export function setupDeleteProfileEvent() {
-  const deleteButton = document.getElementById("delete-button");
+  const deleteButton = document.getElementById("delete-profile-button");
 
   deleteButton.addEventListener("click", () => {
     const confirmed = confirm(

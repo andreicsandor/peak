@@ -273,8 +273,8 @@ function getProfilePageTemplate() {
           </div>
           <div class="athleticism-output"><span id="athleticism-level">Not Athletic</span></div>
         </div>
-        <button class="control-button" id="update-button">Save Changes</button>
-        <button class="delete-button" id="delete-button">Delete Profile</button>
+        <button class="control-button" id="update-profile-button">Save Changes</button>
+        <button class="delete-button" id="delete-profile-button">Delete Profile</button>
       </div>
     </div>
   `;
@@ -544,10 +544,30 @@ setupNavigationEvents();
 setupPopstateEvent();
 setupInitialPage();
 
+// Conditionally displaying the logout button
+function displayLogoutButton() {
+  const logoutContainer = document.getElementById("logout-container");
+
+  const personId = getPersonIdFromCookie();
+
+  if (personId) {
+    logoutContainer.innerHTML = `
+      <a href="/logout" aria-label="Log out" class="text-white font-bold">
+        <img class="logo" src="./src/assets/x.svg" alt="app logo" />
+      </a>
+    `;
+  } else {
+    logoutContainer.innerHTML = "";
+  }
+}
+
+// Call this function on page load
+document.addEventListener("DOMContentLoaded", () => {
+  displayLogoutButton();
+});
+
 // Resizing & orientation scripts
 function handleOrientationChange() {
-  removeMapLoader();
-
   const menuWrapper = document.querySelector(".dashboard-menu-wrapper");
   const mapWrapper = document.querySelector(".map-wrapper");
   const mapMessage = document.querySelector(".map-message");

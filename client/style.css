@@ -1133,6 +1133,15 @@ input[type="number"] {
   background-color: var(--background-dark);
 }
 
+#update-profile-button {
+  color: var(--secondary-color);
+  margin-top: 2.5rem;
+}
+
+#redirect-button {
+  color: var(--secondary-color);
+}
+
 
 /* Input Styles */
 .input-custom {
@@ -1140,7 +1149,7 @@ input[type="number"] {
   border: none;
   border-radius: 10px;
   font-size: var(--h3-font-size);
-  color: var(--secondary-color);
+  color: var(--primary-color);
   padding: 0.75rem 1rem;
   transition:
     background-color var(--transition-speed),
