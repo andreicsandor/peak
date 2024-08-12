@@ -75,12 +75,19 @@
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
         <dependency>
             <groupId>com.peak</groupId>
             <artifactId>routes</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+
 		<dependency>
 			<groupId>com.peak</groupId>
 			<artifactId>assistant</artifactId>

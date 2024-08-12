@@ -170,7 +170,7 @@ export async function handleProfileFetch() {
         document.getElementById("firstName").value = profile.firstName || "";
         document.getElementById("lastName").value = profile.lastName || "";
         document.getElementById("username").value = profile.username || "";
-        document.getElementById("password").value = profile.password || "";
+        document.getElementById("password").value = "";
         document.getElementById("birthdate").value = profile.birthdate || "";
         document.getElementById("gender").value = profile.gender || "male";
         document.getElementById("weight").value = profile.weight || "";

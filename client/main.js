@@ -272,8 +272,8 @@ function getProfilePageTemplate() {
           <input type="text" id="username" class="input-custom input-wide" placeholder="Enter username" required>
         </div>
         <div class="input-group">
-            <label class="label-custom" for="password">Password</label>
-            <input type="password" id="password" class="input-custom input-wide" placeholder="Enter password" required>
+          <label class="label-custom" for="password">Password</label>
+          <input type="password" id="password" class="input-custom input-wide" value="" placeholder="Enter password" required>
         </div>
         <div class="input-group">
           <label class="label-custom" for="birthdate">Birthdate</label>
@@ -570,6 +570,13 @@ export async function renderProfilePage() {
     const deleteProfileButton = document.getElementById("delete-profile-button");
     if (deleteProfileButton) {
       deleteProfileButton.addEventListener("click", handleProfileDelete);
+    }
+
+    const passwordField = document.getElementById("password");
+    if (passwordField) {
+      passwordField.addEventListener("focus", () => {
+        passwordField.value = "";
+      });
     }
 
     formatDatePicker();

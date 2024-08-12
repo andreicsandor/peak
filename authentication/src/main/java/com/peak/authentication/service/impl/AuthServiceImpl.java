@@ -7,6 +7,7 @@ import com.peak.users.model.Person;
 import com.peak.users.repository.PersonDAO;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,19 +17,25 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private PersonDAO personDAO;
+
     @Autowired
     private PersonMapper personMapper;
 
     @Override
     public PersonDTO authenticatePerson(String username, String password, HttpSession session) {
         List<Person> personList = personDAO.findByUsername(username);
-        if (!personList.isEmpty() && personList.get(0).getPassword().equals(password)) {
+
+        if (!personList.isEmpty()) {
             Person person = personList.get(0);
-            session.setAttribute("loggedInUser", person);
-            return personMapper.convertDTO(person);
-        } else {
-            throw new IllegalArgumentException("Invalid username or password");
+
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+            if (passwordEncoder.matches(password, person.getPassword())) {
+                session.setAttribute("loggedInUser", person);
+                return personMapper.convertDTO(person);
+            }
         }
+        throw new IllegalArgumentException("Invalid username or password");
     }
 
     @Override

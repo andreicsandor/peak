@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,9 +34,14 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public PersonDTO createPerson(NewPersonDTO newPersonDTO) {
         Person person = personMapper.convertNewPersonDTOToEntity(newPersonDTO);
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(newPersonDTO.getPassword());
+        person.setPassword(hashedPassword);
+
         person = personDAO.save(person);
 
-        if(person == null) {
+        if (person == null) {
             return null;
         }
 
@@ -53,8 +59,8 @@ public class PersonServiceImpl implements PersonService {
         }
 
         Person person = personEntity.get();
+
         person.setUsername(personPatchDTO.getUsername());
-        person.setPassword(personPatchDTO.getPassword());
         person.setFirstName(personPatchDTO.getFirstName());
         person.setLastName(personPatchDTO.getLastName());
         person.setBirthdate(personPatchDTO.getBirthdate());
@@ -62,6 +68,12 @@ public class PersonServiceImpl implements PersonService {
         person.setWeight(personPatchDTO.getWeight());
         person.setHeight(personPatchDTO.getHeight());
         person.setWeeklyWorkouts(personPatchDTO.getWeeklyWorkouts());
+
+        if (personPatchDTO.getPassword() != null && !personPatchDTO.getPassword().isEmpty()) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(personPatchDTO.getPassword());
+            person.setPassword(hashedPassword);
+        }
 
         personDAO.save(person);
 
