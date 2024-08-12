@@ -1,4 +1,4 @@
-import { getAuthHeader } from "../../utils/profileUtils";
+import { getAuthHeader } from "../../utils/userUtils";
 import { API_ROUTES_URL } from "../../config/apiConfig";
 
 export async function checkOwnership(routeId, personId) {

@@ -1,5 +1,5 @@
 import { API_ASSISTANT_URL } from "../../config/apiConfig";
-import { getAuthHeader } from "../../utils/profileUtils";
+import { getAuthHeader } from "../../utils/userUtils";
 
 export async function fetchTips(routeData) {
   const requestPayload = { routeData };

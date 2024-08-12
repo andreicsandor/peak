@@ -1,5 +1,5 @@
 import { API_ROUTES_URL } from "../../config/apiConfig";
-import { getAuthHeader } from "../../utils/profileUtils";
+import { getAuthHeader } from "../../utils/userUtils";
 
 export async function deleteRoute(id) {
   return fetch(`${API_ROUTES_URL}/delete-route/${id}`, {

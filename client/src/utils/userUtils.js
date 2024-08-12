@@ -1,9 +1,4 @@
 import toastr from "toastr";
-import {
-  API_LOGIN_URL,
-  API_USERS_URL,
-  API_REGISTER_URL,
-} from "../config/apiConfig";
 import { formatDatePicker } from "./interfaceUtils";
 import { addAthleticismLabel } from "../components/createProfilePanel";
 import { registerUser } from "../api/auth/registerUser";

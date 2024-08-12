@@ -20,7 +20,7 @@ import { resetRoutePanel } from "./src/components/createRoutePanel.js";
 import { addLocationSearchBar } from "./src/components/createSearchControls.js";
 import { addLocationButton } from "./src/components/createSearchControls.js";
 import { addWeatherWidget } from "./src/components/createWeatherControls.js";
-import { getCookie, getPersonIdFromCookie } from "./src/utils/profileUtils.js";
+import { getCookie, getPersonIdFromCookie } from "./src/utils/userUtils.js";
 import { checkOwnership } from "./src/api/routes/checkOwnership.js";
 import { setupOptionButtonEvents } from "./src/components/createProfilePanel.js";
 import {
@@ -30,7 +30,7 @@ import {
   handleProfileFetch,
   handleProfileUpdate,
   handleProfileDelete,
-} from "./src/utils/profileUtils.js";
+} from "./src/utils/userUtils.js";
 import {
   formatDatePicker,
   validateNumericInput,

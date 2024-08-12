@@ -1,5 +1,5 @@
 import { API_MAPS_URL } from "../../config/apiConfig";
-import { getAuthHeader } from "../../utils/profileUtils";
+import { getAuthHeader } from "../../utils/userUtils";
 
 export async function fetchLocation(query) {
   const locationURL = `${API_MAPS_URL}/search-location?location=${encodeURIComponent(query)}`;
