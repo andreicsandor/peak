@@ -1,8 +1,11 @@
 import { API_ASSISTANT_URL } from "../../config/apiConfig";
 import { getAuthHeader } from "../../utils/userUtils";
 
-export async function fetchTips(routeData) {
-  const requestPayload = { routeData };
+export async function fetchTips(routeData, userData) {
+  const requestPayload = {
+    routeData,
+    userData,
+  };
 
   try {
     const response = await fetch(`${API_ASSISTANT_URL}/get-tips`, {

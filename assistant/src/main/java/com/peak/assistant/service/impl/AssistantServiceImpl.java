@@ -5,6 +5,7 @@ import com.peak.assistant.dto.AssistantResponseDTO;
 import com.peak.assistant.service.AssistantService;
 import com.peak.routes.dto.RouteDTO;
 import com.peak.routes.model.WeatherMetrics;
+import com.peak.users.dto.BodyMetricsDTO;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,8 +23,10 @@ public class AssistantServiceImpl implements AssistantService {
 
     @Override
     public AssistantResponseDTO getRecommendation(AssistantRequestDTO request) {
+        RouteDTO routeData = request.getRouteData();
+        BodyMetricsDTO userData = request.getBodyMetricsData();
 
-        String prompt = generatePrompt(request.getRouteData());
+        String prompt = generatePrompt(routeData, userData);
         String responseText = callChatGPT(prompt);
 
         AssistantResponseDTO response = new AssistantResponseDTO();
@@ -31,20 +34,15 @@ public class AssistantServiceImpl implements AssistantService {
         return response;
     }
 
-    private String generatePrompt(RouteDTO routeData) {
+    private String generatePrompt(RouteDTO routeData, BodyMetricsDTO userData) {
         WeatherMetrics weatherMetrics = routeData.getWeatherMetrics();
 
         StringBuilder prompt = new StringBuilder();
         prompt.append("Route Data:\n")
-                .append("ID: ").append(routeData.getId()).append("\n")
-                .append("Name: ").append(routeData.getName()).append("\n")
-                .append("Waypoints: ").append(routeData.getWaypoints()).append("\n")
-                .append("GeoCoordinates: ").append(routeData.getGeoCoordinates()).append("\n")
                 .append("Distance: ").append(routeData.getDistance()).append(" meters\n")
                 .append("Elevation Gain: ").append(routeData.getElevationGain()).append(" meters\n")
                 .append("Duration: ").append(routeData.getDuration()).append(" seconds\n")
                 .append("Location: ").append(routeData.getLocation()).append("\n\n");
-
 
         if (weatherMetrics.getScheduledTime() != null) {
             prompt.append("Weather Data:\n")
@@ -59,19 +57,26 @@ public class AssistantServiceImpl implements AssistantService {
             prompt.append("Weather Data: Not Available\n\n");
         }
 
-        prompt.append("Based on the above data, provide an app-suitable recommendation (circa 5 phrases) for the planned running route. ")
-                .append("Include specific tips on hydration, food intake, types of running shoes based on short (< 10km)/long distance (> 10km). ")
-                .append("Give food recommendations based on required level of energy for the effort (e.g. more carbs for increased fatigue). ")
-                .append("Avoid nutrition and hydration tips if route is under 5km. ")
-                .append("If weather data is available, describe how the conditions might feel, including the impact of humidity or wind, and explain why these factors are important for preparation. ")
-                .append("If weather data is not available, avoid weather related tips. ")
-                .append("Tailor recommendations based on the route data and avoid general tips. ")
-                .append("Avoid mentioning route duration and distance in your response. ")
-                .append("Use one decimal for any number that is not round. ")
-                .append("Consider the target pace, computed as duration over distance, and the overall run intensity, taking into account duration, pace, elevation gain, and weather factors. ")
-                .append("Keep in mind that distance and elevation gain are measured in meters, while duration is in seconds. ")
-                .append("Additionally, provide a fatigue factor recommendation based on the route data, run intensity, and weather conditions.")
-                .append("Keep the recommendation within a couple of lines. ");
+        if (userData != null) {
+            prompt.append("User Body Metrics:\n")
+                    .append("Age: ").append(userData.getAge()).append("\n")
+                    .append("Weight: ").append(userData.getWeight()).append(" kg\n")
+                    .append("Height: ").append(userData.getHeight()).append(" cm\n")
+                    .append("Weekly Workouts: ").append(userData.getWeeklyWorkouts()).append("\n\n");
+        }
+
+        prompt.append("Based on the above data, provide an app-suitable recommendation of circa 4 phrases for the planned running route. ")
+                .append("Tailor recommendations based on the user data, route data and avoid general tips. ")
+                .append("Consider the target pace, computed as duration over distance, and the overall run intensity, taking into account duration, pace and elevation gain. ")
+                .append("Take into account the age, weight, height and how active the person is. ")
+                .append("If weather data is available, describe how the conditions might feel, including the impact of humidity or wind. ")
+                .append("If weather data is unavailable, skip weather related tips by all means. ")
+                .append("Give pre-workout food & hydration recommendations based on required level of energy for the effort. ")
+                .append("Keep in mind that distance and elevation gain are measured in meters, duration is in seconds, height in centimeters and weight in kilograms. ")
+                .append("Use one decimal for any number that is not round in the case of weather data. ")
+                .append("Avoid mentioning route duration and distance values in your response by all means. ")
+                .append("Do not give numbered or bullet lists, instead add a small tittle before each phrase, e.g. Distance:, Nutrition:, Weather: .")
+                .append("Be concise and give clear instructions.");
 
         return prompt.toString();
     }
@@ -83,8 +88,8 @@ public class AssistantServiceImpl implements AssistantService {
         requestBody.put("model", "gpt-4");
         requestBody.put("messages", new JSONArray().put(new JSONObject().put("role", "system").put("content", "You are a helpful assistant, a dietitian & running coach."))
                 .put(new JSONObject().put("role", "user").put("content", prompt)));
-        requestBody.put("max_tokens", 200);
-        requestBody.put("temperature", 0.7);
+        requestBody.put("max_tokens", 500);
+        requestBody.put("temperature", 0.5);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

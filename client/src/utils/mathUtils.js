@@ -20,10 +20,12 @@ export function getDistanceBetweenPoints(point1, point2) {
   const deltaLat = deg2rad(point2.lat - point1.lat);
   const deltaLng = deg2rad(point2.lng - point1.lng);
 
-  const a = 
+  const a =
     Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-    Math.cos(lat1) * Math.cos(lat2) *
-    Math.sin(deltaLng / 2) * Math.sin(deltaLng / 2);
+    Math.cos(lat1) *
+      Math.cos(lat2) *
+      Math.sin(deltaLng / 2) *
+      Math.sin(deltaLng / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const distance = R * c; // Distance in kilometers
@@ -37,4 +39,20 @@ function deg2rad(deg) {
 export function convertPaceToVelocity(minutes, seconds) {
   const totalMinutes = minutes + seconds / 60;
   return 60 / totalMinutes;
+}
+
+export function calculateAge(birthdate) {
+  const birthDate = new Date(birthdate);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
 }

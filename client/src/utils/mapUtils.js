@@ -43,7 +43,8 @@ import { WeatherMetrics } from "../dto/weatherMetricsDTO.js";
 import { fetchTips } from "../api/assistant/fetchTips.js";
 import { Route } from "../dto/routeDTO.js";
 import { addAssistantOverlay } from "../components/createAssistantControls.js";
-import { getPersonIdFromCookie } from "./userUtils.js";
+import { getBodyMetrics, getPersonIdFromCookie } from "./userUtils.js";
+import { BodyMetrics } from "../dto/bodyMetricsDTO.js";
 
 toastr.options = toastrOptions;
 
@@ -652,7 +653,7 @@ export async function handleUpdate(id) {
       location,
       importedRouteId,
       percentageSimilarity,
-      personId,
+      personId
     );
 
     toastr.success("Route updated successfully.");
@@ -693,7 +694,11 @@ export async function handleImport(event) {
   }
 
   try {
-    const { routes, percentageSimilarity } = await importRoute(file, routeId, personId);
+    const { routes, percentageSimilarity } = await importRoute(
+      file,
+      routeId,
+      personId
+    );
     if (routes.length > 0) {
       const importedRoute = routes[0];
       importManager.setImportedRoute(importedRoute);
@@ -735,7 +740,9 @@ export async function handleRemoveImport() {
 }
 
 export async function handleAssistant() {
-  const { routeManager, elevationManager, weatherManager } = globalManager.getManagers();
+  const { routeManager, elevationManager, weatherManager, userManager } =
+    globalManager.getManagers();
+
   const waypoints = routeManager.getWaypoints();
   const geoCoordinates = routeManager.getGeoCoordinates();
 
@@ -752,15 +759,28 @@ export async function handleAssistant() {
     return;
   }
 
-  const formattedWaypoints = JSON.stringify(waypoints.map((waypoint) => ({
-    lng: waypoint.getLngLat().lng,
-    lat: waypoint.getLngLat().lat,
-  })));
+  const formattedWaypoints = JSON.stringify(
+    waypoints.map((waypoint) => ({
+      lng: waypoint.getLngLat().lng,
+      lat: waypoint.getLngLat().lat,
+    }))
+  );
 
-  const formattedGeoCoordinates = JSON.stringify(geoCoordinates.map((geoCoordinate) => ({
-    lng: geoCoordinate[0],
-    lat: geoCoordinate[1],
-  })));
+  const formattedGeoCoordinates = JSON.stringify(
+    geoCoordinates.map((geoCoordinate) => ({
+      lng: geoCoordinate[0],
+      lat: geoCoordinate[1],
+    }))
+  );
+
+  const userBodyMetrics = getBodyMetrics();
+
+  const userData = new BodyMetrics({
+    age: userBodyMetrics.age,
+    weight: userBodyMetrics.weight,
+    height: userBodyMetrics.height,
+    weeklyWorkouts: userBodyMetrics.weeklyWorkouts,
+  });
 
   const routeData = new Route({
     name: "My Route",
@@ -769,13 +789,24 @@ export async function handleAssistant() {
     distance: routeMetricsData.distance,
     duration: routeMetricsData.duration,
     elevationGain: routeMetricsData.elevationGain,
-    weatherMetrics: weatherMetricsData ? new WeatherMetrics(weatherMetricsData) : new WeatherMetrics(),
+    weatherMetrics: weatherMetricsData
+      ? new WeatherMetrics(weatherMetricsData)
+      : new WeatherMetrics(),
     location: location,
   });
 
   try {
-    toastr.info("Getting tips for your run...", "Assistant");
-    const data = await fetchTips(routeData);
+    toastr.clear();
+    setTimeout(() => {
+      toastr.info("Getting tips for your run...", "Assistant", {
+        timeOut: 15000,
+        extendedTimeOut: 5000,
+        preventDuplicates: true,
+        closeButton: true,
+      });
+    }, 300);
+
+    const data = await fetchTips(routeData, userData);
     addAssistantOverlay(data.recommendation);
   } catch (error) {
     toastr.error("Oops, something went wrong.", "Error!");

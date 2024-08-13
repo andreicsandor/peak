@@ -6,6 +6,8 @@ import { loginUser } from "../api/auth/loginUser";
 import { fetchUser } from "../api/users/fetchUser";
 import { updateUser } from "../api/users/updateUser";
 import { Person } from "../dto/personDTO";
+import { BodyMetrics } from "../dto/bodyMetricsDTO";
+import { calculateAge } from "./mathUtils";
 
 export async function handleRegister(event) {
   event.preventDefault();
@@ -286,4 +288,22 @@ export function getUsernameFromCookie() {
 export function getAuthHeader() {
   const token = localStorage.getItem("jwtToken");
   return { Authorization: `${token}` };
+}
+
+export async function getBodyMetrics() {
+  const userId = getPersonIdFromCookie();
+  const person = await fetchUser(userId);
+
+  if (person) {
+    const age = calculateAge(person.birthdate);
+
+    return new BodyMetrics({
+      age: age,
+      weight: person.weight,
+      height: person.height,
+      weeklyWorkouts: person.weeklyWorkouts,
+    });
+  }
+
+  return null;
 }

@@ -3,7 +3,7 @@ import { typeText } from "../utils/interfaceUtils";
 export function addAssistantOverlay(recommendation) {
   const overlay = document.getElementById("dashboard-assistant-overlay");
   overlay.innerHTML = `
-      <div class="overlay-header">
+      <div class="overlay-header" style="padding-bottom: 1rem;">
         <button href="#" class="control-button" id="close-assistant-overlay">
           <img src="./src/assets/x.svg" alt="Close">
         </button>
