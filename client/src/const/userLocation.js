@@ -1,5 +1,5 @@
 export const UserLocation = {
-  DEFAULT: [23.5899, 46.7697],
+  DEFAULT: [40.7128, -74.006],
 };
 
 let userLocation = [...UserLocation.DEFAULT];
