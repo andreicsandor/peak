@@ -1635,6 +1635,11 @@ input[type="number"] {
   .action-container {
     margin-bottom: 0rem;
   }
+
+  .dashboard-menu-wrapper .button-group {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
 
 /* Max width 900px */
@@ -1695,11 +1700,6 @@ input[type="number"] {
     margin-bottom: 5px;
   }
 
-  .button-group {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
   .icon-badge {
     margin-right: 0;
     padding: 0.5rem;
@@ -1739,5 +1739,10 @@ input[type="number"] {
   .option-button {
     width: 100%;
     text-align: center;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 1rem;
   }
 }
