@@ -784,7 +784,7 @@ input[type="number"] {
 }
 
 .overlay-recommendation {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .typing-indicator {
@@ -817,7 +817,7 @@ input[type="number"] {
 }
 
 .recommendation-text {
-  font-size: var(--h2-font-size);
+  line-height: 1.8;
 }
 
 @keyframes bounce {
@@ -1479,10 +1479,6 @@ input[type="number"] {
   display: none !important;
 }
 
-.disabled {
-
-}
-
 .icon-badge {
   margin-right: 1.5rem;
 }
@@ -1513,10 +1509,6 @@ input[type="number"] {
 
 /* Max width 1500px */
 @media only screen and (max-width: 1500px) {
-  .overlay-header {
-    padding-top: 1rem;
-  }
-
   .dashboard-forecast-overlay {
     top: 50%;
     width: 85%;
@@ -1741,13 +1733,5 @@ input[type="number"] {
   .dashboard-assistant-overlay {
     top: 50%;
     max-height: 90%;
-  }
-
-  .overlay-recommendation {
-    margin-top: 1rem;
-  }
-
-  .recommendation-text {
-    font-size: var(--h4-font-size);
   }
 }

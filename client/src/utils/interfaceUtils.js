@@ -406,10 +406,36 @@ export function typeText(element, text, delay = 20) {
   typingIndicator.classList.add("typing-indicator");
   element.appendChild(typingIndicator);
 
+  const parts = text.split(/(\*\*.*?\*\*)/);
+
+  let partIndex = 0;
+  let charIndex = 0;
+  let currentPart = parts[partIndex];
+
   const intervalId = setInterval(() => {
-    if (i < text.length) {
-      element.insertBefore(document.createTextNode(text.charAt(i)), typingIndicator);
-      i++;
+    if (partIndex < parts.length) {
+      if (charIndex < currentPart.length) {
+        if (currentPart.startsWith("**") && currentPart.endsWith("**")) {
+          const boldText = document.createElement("strong");
+          boldText.textContent = currentPart
+            .substring(2, currentPart.length - 2)
+            .slice(0, charIndex + 1);
+          element.appendChild(boldText);
+        } else {
+          element.insertBefore(
+            document.createTextNode(currentPart.charAt(charIndex)),
+            typingIndicator
+          );
+        }
+        charIndex++;
+      } else {
+        // Move to the next part
+        partIndex++;
+        if (partIndex < parts.length) {
+          currentPart = parts[partIndex];
+          charIndex = 0;
+        }
+      }
     } else {
       clearInterval(intervalId);
       typingIndicator.remove();
