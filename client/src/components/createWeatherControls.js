@@ -291,7 +291,7 @@ function addForecastCards() {
       overlay.style.display = "none";
       setForecastFilter(ForecastFilters.ALL);
       activateDashboardControls();
-      toastr.success("Route is now scheduled for a run.");
+      toastr.info("Route is now scheduled for a run.");
     });
   });
 
