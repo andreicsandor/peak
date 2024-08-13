@@ -60,7 +60,7 @@ public class PersonServiceImpl implements PersonService {
 
         Person person = personEntity.get();
 
-        person.setUsername(personPatchDTO.getUsername());
+//        person.setUsername(personPatchDTO.getUsername());
         person.setFirstName(personPatchDTO.getFirstName());
         person.setLastName(personPatchDTO.getLastName());
         person.setBirthdate(personPatchDTO.getBirthdate());

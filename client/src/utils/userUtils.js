@@ -5,6 +5,7 @@ import { registerUser } from "../api/auth/registerUser";
 import { loginUser } from "../api/auth/loginUser";
 import { fetchUser } from "../api/users/fetchUser";
 import { updateUser } from "../api/users/updateUser";
+import { Person } from "../dto/personDTO";
 
 export async function handleRegister(event) {
   event.preventDefault();
@@ -28,9 +29,9 @@ export async function handleRegister(event) {
   const birthdate = new Date(birthdateRaw).toISOString().split("T")[0];
 
   const gender = genderElement.value;
-  const weight = weightElement.value;
-  const height = heightElement.value;
-  const weeklyWorkouts = workoutButton.getAttribute("data-frequency");
+  const weight = parseInt(weightElement.value);
+  const height = parseInt(heightElement.value);
+  const weeklyWorkouts = parseInt(workoutButton.getAttribute("data-frequency"));
 
   if (
     !username ||
@@ -47,20 +48,20 @@ export async function handleRegister(event) {
     return;
   }
 
-  const registerData = {
-    username,
-    password,
-    firstName,
-    lastName,
-    birthdate,
-    gender,
-    weight: parseInt(weight),
-    height: parseInt(height),
-    weeklyWorkouts: parseInt(weeklyWorkouts),
-  };
+  const person = new Person({
+    username: username,
+    password: password,
+    firstName: firstName,
+    lastName: lastName,
+    birthdate: birthdate,
+    gender: gender,
+    weight: weight,
+    height: height,
+    weeklyWorkouts: weeklyWorkouts,
+  });
 
   try {
-    const data = await registerUser(registerData);
+    const data = await registerUser(person);
 
     if (data && data.jwtToken) {
       toastr.success("You will be redirected shortly.", "Joined!");
@@ -127,8 +128,7 @@ export async function handleProfileFetch() {
   }
 
   try {
-    const data = await fetchUser(personId);
-    const profile = data[0];
+    const profile = await fetchUser(personId);
 
     if (profile) {
       document.getElementById("firstName").value = profile.firstName || "";
@@ -198,21 +198,19 @@ export async function handleProfileUpdate(event) {
     return;
   }
 
-  const profileData = {
-    id: personId,
-    firstName,
-    lastName,
-    username,
-    password,
-    birthdate,
-    gender,
-    weight,
-    height,
-    weeklyWorkouts,
-  };
-
   try {
-    await updateUser(profileData);
+    await updateUser(
+      personId,
+      username,
+      password,
+      firstName,
+      lastName,
+      birthdate,
+      gender,
+      weight,
+      height,
+      weeklyWorkouts
+    );
     toastr.success("Profile updated successfully.");
   } catch (error) {
     toastr.error("Oops, something went wrong.", "Error!");
