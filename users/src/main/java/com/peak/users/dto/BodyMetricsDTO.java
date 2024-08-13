@@ -1,8 +1,7 @@
 package com.peak.users.dto;
 
 public class BodyMetricsDTO {
-    private String personId;
-    private String username;
+    private Integer age;
     private Integer weight;
     private Integer height;
     private Integer weeklyWorkouts;
@@ -10,28 +9,19 @@ public class BodyMetricsDTO {
     public BodyMetricsDTO() {
     }
 
-    public BodyMetricsDTO(String personId, String username, Integer weight, Integer height, Integer weeklyWorkouts) {
-        this.personId = personId;
-        this.username = username;
+    public BodyMetricsDTO(Integer age, Integer weight, Integer height, Integer weeklyWorkouts) {
+        this.age = age;
         this.weight = weight;
         this.height = height;
         this.weeklyWorkouts = weeklyWorkouts;
     }
 
-    public String getPersonId() {
-        return personId;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setPersonId(String personId) {
-        this.personId = personId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public Integer getWeight() {
