@@ -405,33 +405,17 @@ export function typeText(element, text, delay = 20) {
   typingIndicator.classList.add("typing-indicator");
   element.appendChild(typingIndicator);
 
-  const parts = text.split(/(\*\*.*?\*\*)/);
+  const sanitizedText = text.replace(/\*\*/g, '');
 
-  let partIndex = 0;
   let charIndex = 0;
-  let currentPart = parts[partIndex];
 
   const intervalId = setInterval(() => {
-    if (partIndex < parts.length) {
-      if (charIndex < currentPart.length) {
-        if (currentPart.startsWith("**") && currentPart.endsWith("**")) {
-          const boldText = document.createElement("strong");
-          boldText.textContent = currentPart.substring(2, charIndex + 2);
-          element.appendChild(boldText);
-        } else {
-          element.insertBefore(
-            document.createTextNode(currentPart.charAt(charIndex)),
-            typingIndicator
-          );
-        }
-        charIndex++;
-      } else {
-        partIndex++;
-        if (partIndex < parts.length) {
-          currentPart = parts[partIndex];
-          charIndex = 0;
-        }
-      }
+    if (charIndex < sanitizedText.length) {
+      element.insertBefore(
+        document.createTextNode(sanitizedText.charAt(charIndex)),
+        typingIndicator
+      );
+      charIndex++;
     } else {
       clearInterval(intervalId);
       typingIndicator.remove();
