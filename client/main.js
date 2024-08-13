@@ -273,7 +273,7 @@ function getProfilePageTemplate() {
         </div>
         <div class="input-group">
           <label class="label-custom" for="password">Password</label>
-          <input type="password" id="password" class="input-custom input-wide" value="" placeholder="Enter password" required>
+          <input type="password" id="password" class="input-custom input-wide" value="" placeholder="Enter old or new password" required>
         </div>
         <div class="input-group">
           <label class="label-custom" for="birthdate">Birthdate</label>
