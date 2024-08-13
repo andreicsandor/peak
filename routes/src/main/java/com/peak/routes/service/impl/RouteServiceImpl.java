@@ -83,9 +83,32 @@ public class RouteServiceImpl implements RouteService {
         }
 
         Route route = routeEntity.get();
-        if (newName != null && !newName.isEmpty()) {
-            route.setName(newName);
+
+        String previousName = route.getName();
+        Long importedRouteId = routePatchDTO.getImportedRouteId();
+
+        System.out.println(newName);
+        System.out.println(previousName);
+        System.out.println(routePatchDTO.getWeatherMetrics().getScheduledTime());
+
+        if (importedRouteId != null) {
+            if ("Planned Activity".equals(previousName)) {
+                route.setName("Completed Activity");
+            }
+        } else {
+            if ("Planned Activity".equals(previousName) && newName == null) {
+                route.setName("Planned Activity");
+            }
+            if ("Completed Activity".equals(previousName) && newName == null) {
+                route.setName("Planned Activity");
+            }
+            if (routePatchDTO.getWeatherMetrics().getScheduledTime() != null && newName != null) {
+                route.setName(newName);
+            } else {
+                route.setName("Planned Activity");
+            }
         }
+
         try {
             if (newWaypoints != null && !newWaypoints.isEmpty()) {
                 LineString lineStringWaypoints = (LineString) wktReader.read(newWaypoints);
@@ -117,7 +140,7 @@ public class RouteServiceImpl implements RouteService {
         route.setImportedRouteId(routePatchDTO.getImportedRouteId());
         route.setPercentageSimilarity(routePatchDTO.getPercentageSimilarity());
 
-        if (route.getWeatherMetrics().getScheduledTime()== null
+        if (route.getWeatherMetrics().getScheduledTime() == null
                 && route.getPercentageSimilarity() != null
                 && route.getImportedRouteId() != null) {
             route.setCompletedTime(LocalDateTime.now());
