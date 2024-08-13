@@ -1098,10 +1098,10 @@ input[type="number"] {
 }
 
 .profile-wrapper .athleticism-output {
-  margin: var(--base-margin) 0;
-  font-size: var(--h4-font-size);
+  margin: 0.5rem;
+  font-size: var(--h3-font-size);
   color: var(--primary-color);
-  text-align: center;
+  text-align: left;
   font-weight: bold;
 }
 
