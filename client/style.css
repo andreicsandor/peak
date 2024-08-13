@@ -1584,8 +1584,13 @@ input[type="number"] {
 
   .dashboard-info-wrapper,
   .dashboard-pace-wrapper,
-  .dashboard-weather-wrapper {
+  .dashboard-weather-wrapper,
+  .dashboard-similarity-wrapper {
     padding: 0.5rem;
+  }
+
+  .dashboard-similarity-wrapper {
+    min-width: 10%;
   }
 
   .dashboard-info-wrapper {
