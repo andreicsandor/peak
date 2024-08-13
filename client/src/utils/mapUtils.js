@@ -799,7 +799,7 @@ export async function handleAssistant() {
     toastr.clear();
     setTimeout(() => {
       toastr.info("Getting tips for your run...", "Assistant", {
-        timeOut: 15000,
+        timeOut: 7500,
         extendedTimeOut: 5000,
         preventDuplicates: true,
         closeButton: true,

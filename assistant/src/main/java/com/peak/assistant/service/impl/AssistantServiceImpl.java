@@ -85,7 +85,7 @@ public class AssistantServiceImpl implements AssistantService {
         String apiUrl = "https://api.openai.com/v1/chat/completions";
 
         JSONObject requestBody = new JSONObject();
-        requestBody.put("model", "gpt-4");
+        requestBody.put("model", "gpt-4-turbo");
         requestBody.put("messages", new JSONArray().put(new JSONObject().put("role", "system").put("content", "You are a helpful assistant, a dietitian & running coach."))
                 .put(new JSONObject().put("role", "user").put("content", prompt)));
         requestBody.put("max_tokens", 500);
