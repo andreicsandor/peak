@@ -401,7 +401,6 @@ export function toCamelCase(str) {
 }
 
 export function typeText(element, text, delay = 20) {
-  let i = 0;
   const typingIndicator = document.createElement("span");
   typingIndicator.classList.add("typing-indicator");
   element.appendChild(typingIndicator);
@@ -417,9 +416,7 @@ export function typeText(element, text, delay = 20) {
       if (charIndex < currentPart.length) {
         if (currentPart.startsWith("**") && currentPart.endsWith("**")) {
           const boldText = document.createElement("strong");
-          boldText.textContent = currentPart
-            .substring(2, currentPart.length - 2)
-            .slice(0, charIndex + 1);
+          boldText.textContent = currentPart.substring(2, charIndex + 2);
           element.appendChild(boldText);
         } else {
           element.insertBefore(
@@ -429,7 +426,6 @@ export function typeText(element, text, delay = 20) {
         }
         charIndex++;
       } else {
-        // Move to the next part
         partIndex++;
         if (partIndex < parts.length) {
           currentPart = parts[partIndex];
