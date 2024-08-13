@@ -1,6 +1,11 @@
 import { typeText } from "../utils/interfaceUtils";
 
 export function addAssistantOverlay(recommendation) {
+  const weatherOverlay = document.getElementById("dashboard-forecast-overlay");
+  if (weatherOverlay && weatherOverlay.style.display === "block") {
+    weatherOverlay.style.display = "none";
+  }
+
   const overlay = document.getElementById("dashboard-assistant-overlay");
   overlay.innerHTML = `
       <div class="overlay-header" style="padding-bottom: 1rem;">

@@ -92,6 +92,11 @@ function updateWeatherWidget(forecast) {
 }
 
 function addWeatherOverlay() {
+  const assistantOverlay = document.getElementById("dashboard-assistant-overlay");
+  if (assistantOverlay && assistantOverlay.style.display === "block") {
+    assistantOverlay.style.display = "none";
+  }
+
   const overlay = document.getElementById("dashboard-forecast-overlay");
   overlay.innerHTML = `
     <div class="overlay-header">
