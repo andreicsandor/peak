@@ -415,6 +415,8 @@ input[type="number"] {
   transition:
     transform var(--transition-speed),
     box-shadow var(--transition-speed);
+  margin-top: var(--small-padding);
+  margin-bottom: var(--small-padding);
 }
 
 .route-card:hover {
@@ -1572,11 +1574,6 @@ input[type="number"] {
     min-height: auto;
   }
 
-  .button-group {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
   .map-wrapper {
     display: none;
   }
@@ -1631,6 +1628,8 @@ input[type="number"] {
   .route-card {
     width: 60%;
     margin: auto;
+    margin-top: var(--small-padding);
+    margin-bottom: var(--small-padding);
   }
 
   .action-container {
@@ -1669,8 +1668,10 @@ input[type="number"] {
 
   .route-card {
     padding: 0.5rem 0.5rem;
-    width: 100%;
+    width: 95%;
     margin: auto;
+    margin-top: var(--small-padding);
+    margin-bottom: var(--small-padding);
   }
 
   .route-card .card-body {
@@ -1692,6 +1693,16 @@ input[type="number"] {
 
   .metric-label {
     margin-bottom: 5px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .icon-badge {
+    margin-right: 0;
+    padding: 0.5rem;
   }
 }
 
