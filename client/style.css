@@ -1176,6 +1176,10 @@ input[type="number"] {
   background-color: var(--hover-light);
 }
 
+.input-custom:read-only {
+  background-color: var(--hover-light);
+}
+
 .input-group {
   width: 100%;
 }
@@ -1471,6 +1475,10 @@ input[type="number"] {
 
 .hidden {
   display: none !important;
+}
+
+.disabled {
+
 }
 
 .icon-badge {

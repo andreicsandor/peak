@@ -269,7 +269,7 @@ function getProfilePageTemplate() {
         </div>
         <div class="input-group">
           <label class="label-custom" for="username">Username</label>
-          <input type="text" id="username" class="input-custom input-wide" placeholder="Enter username" required>
+          <input type="text" id="username" class="input-custom input-wide" placeholder="Enter username" required readonly>
         </div>
         <div class="input-group">
           <label class="label-custom" for="password">Password</label>
