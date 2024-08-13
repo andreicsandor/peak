@@ -39,8 +39,12 @@ import { addDefaultBodyMetrics } from "./src/components/createProfilePanel.js";
 
 // Navigate to a specific URL
 function navigateTo(url) {
-  history.pushState(null, null, url);
-  renderContent(url);
+  if (url === "/run") {
+    window.location.href = url;
+  } else {
+    history.pushState(null, null, url);
+    renderContent(url);
+  }
 }
 
 // HTML templates
