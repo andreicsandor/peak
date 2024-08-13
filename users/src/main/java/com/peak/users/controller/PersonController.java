@@ -41,10 +41,6 @@ public class PersonController {
             persons = personService.findPersons();
         }
 
-        if (persons.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No persons found");
-        }
-
         return persons;
     }
 

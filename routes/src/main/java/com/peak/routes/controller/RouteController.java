@@ -42,10 +42,6 @@ public class RouteController {
             routes = routeService.findRoutes();
         }
 
-        if (routes.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No routes found");
-        }
-
         return routes;
     }
 

@@ -65,10 +65,6 @@ export async function fetchRoutes(routeId = null, name = null, personId = null) 
       },
     });
 
-    if (response.status === 404) {
-      return [];
-    }
-
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
