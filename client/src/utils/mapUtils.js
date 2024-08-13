@@ -98,7 +98,7 @@ export async function setupMapbox(mapboxgl, apiKey, routeGeoCoordinates) {
         location = getUserLocation();
       } catch (error) {
         console.error("Error getting user location", error);
-        toastr.error("Oops, something went wrong.", "Error!");
+        toastr.info("Location services are disabled.", "Location Permission");
         setLocationPermission(LocationPermission.LOCATION_DISABLED);
       }
     } else {
