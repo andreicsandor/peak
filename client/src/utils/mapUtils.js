@@ -94,6 +94,7 @@ export async function setupMapbox(mapboxgl, apiKey, routeGeoCoordinates) {
           navigator.geolocation.getCurrentPosition(resolve, reject);
         });
         setUserLocation(position.coords.longitude, position.coords.latitude);
+        refreshWeatherWidget();
         setLocationPermission(LocationPermission.LOCATION_ENABLED);
         location = getUserLocation();
       } catch (error) {
