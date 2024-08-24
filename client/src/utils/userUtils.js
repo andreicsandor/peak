@@ -8,6 +8,7 @@ import { updateUser } from "../api/users/updateUser";
 import { Person } from "../dto/personDTO";
 import { BodyMetrics } from "../dto/bodyMetricsDTO";
 import { calculateAge } from "./mathUtils";
+import { deleteUser } from "../api/users/deleteUser";
 
 export async function handleRegister(event) {
   event.preventDefault();
@@ -234,7 +235,7 @@ export async function handleProfileDelete(event) {
   }
 
   try {
-    await deleteProfile(personId);
+    await deleteUser(personId);
     toastr.success("You will be redirected shortly.", "Deleted!");
     localStorage.removeItem("jwtToken");
     document.cookie =
