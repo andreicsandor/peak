@@ -18,12 +18,10 @@ export function createSimilaritySummary(route) {
     hour12: true,
   });
 
-  // Convert percentage similarity to a number and round to one decimal place
   const similarityPercentage = parseFloat(
     route.percentageSimilarity.toFixed(1)
   );
 
-  // Format percentage to avoid showing '.0' for whole numbers
   const formattedPercentage =
     similarityPercentage % 1 === 0
       ? similarityPercentage.toFixed(0)

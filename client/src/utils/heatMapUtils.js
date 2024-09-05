@@ -25,7 +25,6 @@ export function clearCoordinates() {
   importedCoordinates = [];
 }
 
-// Resample a route to have a specific number of points
 export function resampleRoute(coordinates, targetLength) {
   const transformedCoordinates = coordinates.map((coord) => [
     coord.lng,
@@ -47,7 +46,6 @@ export function resampleRoute(coordinates, targetLength) {
   return resampledCoordinates;
 }
 
-// Compute the minimum distance between a point and all points in a route
 function computeMinDistance(point, route) {
   let minDistance = Infinity;
 
@@ -61,7 +59,6 @@ function computeMinDistance(point, route) {
   return minDistance;
 }
 
-// Generate heatmap data by calculating differences between two routes
 export function generateHeatMapData(route1, route2) {
   const differences = route1
     .map((point1) => {
@@ -80,7 +77,6 @@ export function generateHeatMapData(route1, route2) {
     })
     .filter((feature) => feature.properties.intensity > 0.0001);
 
-  // Calculate maximum difference for dynamic threshold
   const maxDifference = Math.max(
     ...differences.map((feature) => feature.properties.intensity)
   );
@@ -88,11 +84,10 @@ export function generateHeatMapData(route1, route2) {
   return {
     type: "FeatureCollection",
     features: differences,
-    maxDifference, // Include maxDifference in the return object
+    maxDifference,
   };
 }
 
-// Display the heatmap on the map
 export function displayHeatMap(map, differencesGeoJSON, maxDifference) {
   if (map.getLayer("heatmap-layer")) {
     map.removeLayer("heatmap-layer");
@@ -112,7 +107,6 @@ export function displayHeatMap(map, differencesGeoJSON, maxDifference) {
       [maxDifference, 3],
     ];
 
-    // Ensure stops are in ascending order
     if (maxDifference < 0.5) {
       stops[1] = [maxDifference / 2, 1];
       stops[2] = [maxDifference, 3];
@@ -164,7 +158,6 @@ export function displayHeatMap(map, differencesGeoJSON, maxDifference) {
   }
 }
 
-// Generate and display the heatmap data for the imported route and fetched route
 export function generateAndDisplayHeatMap(map) {
   const { features, maxDifference } = generateHeatMapData(
     importedCoordinates,
@@ -173,7 +166,6 @@ export function generateAndDisplayHeatMap(map) {
   displayHeatMap(map, { type: "FeatureCollection", features }, maxDifference);
 }
 
-// Clear the heatmap from the map
 export function clearHeatMap(map) {
   if (map.getLayer("heatmap-layer")) {
     map.removeLayer("heatmap-layer");
