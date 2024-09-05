@@ -34,11 +34,17 @@ The application aims to develop a platform that enhances athlete performance dur
 The application integrates a combination of architectural models to enable efficient communication between its various components.
 
 ### Client-Server Architecture
-![Client-Server Architecture Diagram](./diagrams/architecture-client-server.png "Client-Server Architecture")
+<div style="text-align:center;">
+    <img src="./diagrams/architecture-client-server.png" alt="Client-Server Architecture" style="max-width: 50%;">
+</div>
 ### Layered Architecture
-![Layered Architecture Diagram](./diagrams/architecture-layered.png "Layered Architecture")
+<div style="text-align:center;">
+    <img src="./diagrams/architecture-layered.png" alt="Layered Architecture" style="max-width: 50%;">
+</div>
 ### Microservices Architecture
-![Microservices Architecture Diagram](./diagrams/architecture-microservices.png "Microservices Architecture")
+<div style="text-align:center;">
+    <img src="./diagrams/architecture-microservices.png" alt="Microservices Architecture" style="max-width: 50%;">
+</div>
 
 The application implements a suite of microservices, each responsible for specific functionalities within the system.
 
