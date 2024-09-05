@@ -150,7 +150,6 @@ Athletes can select the desired day and time for their activity while sorting we
 #### Intelligent Assistant and Performance Suggestions
 Before starting an activity, users can request personalised suggestions for their planned activity. These tips are generated based on current weather conditions, route data, and the athlete’s body metrics. The suggestions cover pacing strategy, effort management, hydration, and nutritional preparation. Once users access this feature, they receive a notification asking them to wait while suggestions are generated via an external API. The information is then displayed in a dedicated window in a clear and readable format, helping users optimise their performance.
 
-![App Screenshot](./demo-images/request-tips.png)
 ![App Screenshot](./demo-images/view-tips.png)
 
 ### C. Activity Log and Route Management
