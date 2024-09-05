@@ -122,7 +122,6 @@ Visitors are presented with the authentication form, which also includes an “I
 Once registered, users can log into their accounts using their username and password. If incorrect details are entered, the application will display the appropriate error message. Upon successful login, the user will be redirected to the “Run” page.
 
 ![App Screenshot](./demo-images/login-unsuccessful.png)
-![App Screenshot](./demo-images/login.png)
 
 ### B. Dashboard
 Upon being redirected to the main screen displayed on the “Run” page, users have access to features such as search and automatic location, route drawing, and planning. Additional tools include weather condition checks and personalised suggestions.
