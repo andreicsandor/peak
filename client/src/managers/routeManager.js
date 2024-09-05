@@ -1,6 +1,6 @@
 import toastr from "toastr";
 import { fetchDirections } from "../api/maps/fetchDirections";
-import { toastrOptions } from "../config/toastrConfig"; 
+import { toastrOptions } from "../config/toastrConfig";
 
 toastr.options = toastrOptions;
 
@@ -125,11 +125,20 @@ export class RouteManager {
 
   computeSegments(waypoints, chunkSize = 25) {
     let chunks = [];
-    for (let i = 0; i < waypoints.length; i += chunkSize) {
-      chunks.push(
-        waypoints.slice(i, Math.min(i + chunkSize, waypoints.length))
-      );
+
+    for (let i = 0; i < waypoints.length; i += chunkSize - 1) {
+      let start = i > 0 ? i - 1 : i;
+      let end = Math.min(i + chunkSize, waypoints.length);
+
+      let chunk = waypoints.slice(start, end);
+
+      if (chunk.length > chunkSize) {
+        chunk = chunk.slice(0, chunkSize);
+      }
+
+      chunks.push(chunk);
     }
+
     return chunks;
   }
 
@@ -159,7 +168,7 @@ export class RouteManager {
         }
       } catch (error) {
         console.log("Skipping this chunk due to an error:", error);
-        toastr.error("Route is too long, undo & add a closer waypoint.", "Couldn't get directions!");
+        toastr.info("Place waypoint closer to a walking path.");
         continue;
       }
     }
