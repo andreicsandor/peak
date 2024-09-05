@@ -109,7 +109,7 @@ The application implements a suite of microservices, each responsible for specif
   - **EventBus**: Implements a publish-subscribe pattern to facilitate communication between different parts of the application.
   - **UI Components**: Functions that generate visual elements such as maps, cards, dashboards, widgets, and buttons. These components are created dynamically using a combination of `innerHTML` and programmatic manipulation of the Document Object Model (DOM), ensuring that logic is kept separate from UI rendering.
 
-## Functionalities:
+## Functionalities
 
 ### A. Authentication & Registration Pages
 
