@@ -14,20 +14,20 @@ The application aims to develop a platform that enhances athlete performance dur
 ## Technologies
 
 - **Frontend Technologies**: 
-  - JavaScript Vanilla
-  - HTML & CSS
+  - ```JavaScript Vanilla```
+  - ```HTML``` & ```CSS```
 - **Backend Technologies**: 
-  - Java
-  - Spring Boot, Spring Security, Spring Data
-  - Hibernate
-  - Java Persistence API (JPA)
-  - JSON Web Tokens (JWT)
+  - ```Java```
+  - ```Spring Boot```, ```Spring Security```, ```Spring Data```
+  - ```Hibernate```
+  - ```Java Persistence API (JPA)```
+  - ```JSON Web Tokens (JWT)```
 - **Database**: 
-  - Microsoft SQL Server
+  - ```Microsoft SQL Server```
 - **Tools**: 
-  - Docker for containerisation of DB
-  - Postman for testing APIs
-  - Vite for client-side builds
+  - ```Docker``` for containerisation of DB
+  - ```Postman``` for testing APIs
+  - ```Vite``` for client-side builds
 
 
 ## Architecture
@@ -67,19 +67,19 @@ The application implements a suite of microservices, each responsible for specif
 
 #### 6. Assistant: 
 - ```Customised Recommendations```: Generates content tailored to the user’s context and planned route.
-- ```AI Integratio```: Interacts with the GPT-4 Turbo model provided by OpenAI to enhance the recommendation process.
+- ```AI Integration```: Interacts with the GPT-4 Turbo model provided by OpenAI to enhance the recommendation process.
 - ```Route and User Data Integration```: Utilises classes imported from other microservices while ensuring data security by excluding sensitive user information.
 
 
 ## Use Cases & Roles
 
-#### Visitors (Unregistered Users)
+### Visitors (Unregistered Users)
 - ```Home Page Access```: Visitors can access the home page, which displays the authentication form.
 - ```Account Creation```: Visitors have access to the account creation page, where they can sign up for an account.
 
 ![Visitor Use-Case Diagram](./diagrams/use-case-diagram-visitor.png "Visitor Use Cases")
 
-#### Registered Users (Clients/Athletes)
+### Registered Users (Clients/Athletes)
 - ```Authentication```: Users can log in using a username and password.
 - ```Personal Information Management```: Users can view and edit their personal details, including body measurements and training frequency.
 - ```Route Management```: Users can create, view, edit, and compare planned routes with those already uploaded on the platform to observe deviations from the planned route or the degree of similarity between routes.
@@ -111,7 +111,7 @@ The application implements a suite of microservices, each responsible for specif
 
 ## Functionalities:
 
-### Authentication & Registration Pages
+### A. Authentication & Registration Pages
 
 #### User Registration
 Visitors are presented with the authentication form, which also includes an “I don’t have an account” button. By clicking this, unregistered visitors can access the account creation form, which requires essential details such as name, username, password, date of birth, gender, weight, height, and weekly training frequency. If all fields are correctly completed, a message will be displayed: “Joined! You will be redirected shortly,” and the newly registered user will be redirected to the main screen.
@@ -124,7 +124,7 @@ Once registered, users can log into their accounts using their username and pass
 ![App Screenshot](./demo-images/login-unsuccessful.png)
 ![App Screenshot](./demo-images/login.png)
 
-### Dashboard
+### B. Dashboard
 Upon being redirected to the main screen displayed on the “Run” page, users have access to features such as search and automatic location, route drawing, and planning. Additional tools include weather condition checks and personalised suggestions.
 
 #### Search and Location
@@ -153,7 +153,7 @@ Before starting an activity, users can request personalised suggestions for thei
 ![App Screenshot](./demo-images/request-tips.png)
 ![App Screenshot](./demo-images/view-tips.png)
 
-### Activity Log and Route Management
+### C. Activity Log and Route Management
 By accessing the “Activity” page from the navigation bar, users can view their activity history, sorted chronologically by storage date. Each activity card displays key parameters like distance, pace, time, and altitude, providing users with a quick overview of the goals set for that route.
 
 ![App Screenshot](./demo-images/view-activities.png)
@@ -174,12 +174,12 @@ After processing the file, the two routes will be displayed on the map alongside
 
 ![App Screenshot](./demo-images/compare-routes.png)
 
-### Profile Page
+### D. Profile Page
 From the navigation bar, users can also access their profile page, where they can control the information shared with the platform. Users can modify personal details such as name, surname, and date of birth, update their athlete profile, change their password, or even delete their account.
 
 ![App Screenshot](./demo-images/edit-profile.png)
 
-### User Interface and Interaction
+### E. User Interface and Interaction
 
 #### Minimalist and Intuitive Design
 Throughout their interaction with the system, users are presented with a minimalist interface designed to maximize the utility of each element. Features are easily accessible and displayed centrally on the screen as a menu bar or widgets, without the need for scrolling.
